@@ -106,7 +106,7 @@
           .then(() => {
             this.isProcessing = false
           })
-      }
+      },
       ...mapActions([
         'updateAlertMessage',
         'loginAsResource'

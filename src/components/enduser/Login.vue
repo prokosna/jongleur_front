@@ -116,7 +116,7 @@
           .then(() => {
             this.isProcessing = false
           })
-      }
+      },
       ...mapActions([
         'updateAlertMessage',
         'loginAsEndUser'
