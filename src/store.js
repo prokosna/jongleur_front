@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import consts from './consts'
+import config from './config'
 import EndUser from './models/EndUser'
 import Client from './models/Client'
 import Resource from './models/Resource'
@@ -13,9 +13,9 @@ Vue.use(Vuex)
 const actions = {
   initialize ({ commit }) {
     // set saved values in localStorage and sessionStorage
-    const saved_end_user_id = localStorage.getItem(consts.END_USER_ID_LOCAL_STORAGE_KEY) || ''
-    const saved_client_id = localStorage.getItem(consts.CLIENT_ID_LOCAL_STORAGE_KEY) || ''
-    const saved_resource_id = localStorage.getItem(consts.RESOURCE_ID_LOCAL_STORAGE_KEY) || ''
+    const saved_end_user_id = localStorage.getItem(config.END_USER_ID_LOCAL_STORAGE_KEY) || ''
+    const saved_client_id = localStorage.getItem(config.CLIENT_ID_LOCAL_STORAGE_KEY) || ''
+    const saved_resource_id = localStorage.getItem(config.RESOURCE_ID_LOCAL_STORAGE_KEY) || ''
     commit('updateEndUserSavedId', { id: saved_end_user_id })
     commit('updateClientSavedId', { id: saved_client_id })
     commit('updateResourceSavedId', { id: saved_resource_id })
@@ -27,13 +27,13 @@ const actions = {
         alertType: null,
         alertMessage: null
       })
-    }, consts.ALERT_MESSAGE_TIMEOUT_MS)
+    }, config.ALERT_MESSAGE_TIMEOUT_MS)
   },
   loginAsEndUser ({ commit }, { name, password }) {
     return new Promise((resolve, reject) => {
       axios({
         method: 'post',
-        url: `${consts.API_URI}/end_users/login`,
+        url: `${config.API_URI}/end_users/login`,
         withCredentials: true,
         responseType: 'json',
         data: {
@@ -49,12 +49,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -66,7 +66,7 @@ const actions = {
       }
       axios({
         method: 'get',
-        url: `${consts.API_URI}/end_users/private/${id}`,
+        url: `${config.API_URI}/end_users/private/${id}`,
         withCredentials: true,
         responseType: 'json'
       })
@@ -83,13 +83,13 @@ const actions = {
             }
             Vue.$log.error(e.response)
             commit('updateEndUserSavedId', { id: null })
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
           commit('updateEndUserSavedId', { id: null })
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -97,7 +97,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'post',
-        url: `${consts.API_URI}/end_users`,
+        url: `${config.API_URI}/end_users`,
         responseType: 'json',
         data: {
           ...util.deepPrune(util.deepDecamelize(endUser))
@@ -109,12 +109,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -122,7 +122,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'put',
-        url: `${consts.API_URI}/end_users/private/${endUser.id}`,
+        url: `${config.API_URI}/end_users/private/${endUser.id}`,
         responseType: 'json',
         withCredentials: true,
         data: {
@@ -136,12 +136,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -149,7 +149,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'delete',
-        url: `${consts.API_URI}/end_users/private/${endUser.id}`,
+        url: `${config.API_URI}/end_users/private/${endUser.id}`,
         withCredentials: true
       })
         .then(() => {
@@ -159,12 +159,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -172,7 +172,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'post',
-        url: `${consts.API_URI}/clients/login`,
+        url: `${config.API_URI}/clients/login`,
         withCredentials: true,
         responseType: 'json',
         data: {
@@ -188,12 +188,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -201,7 +201,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'get',
-        url: `${consts.API_URI}/clients/${id}`,
+        url: `${config.API_URI}/clients/${id}`,
         responseType: 'json'
       })
         .then((resp) => {
@@ -211,12 +211,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -228,7 +228,7 @@ const actions = {
       }
       axios({
         method: 'get',
-        url: `${consts.API_URI}/clients/private/${id}`,
+        url: `${config.API_URI}/clients/private/${id}`,
         withCredentials: true,
         responseType: 'json'
       })
@@ -244,13 +244,13 @@ const actions = {
               return
             }
             commit('updateClientSavedId', { id: null })
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
           commit('updateClientSavedId', { id: null })
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -258,7 +258,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'post',
-        url: `${consts.API_URI}/clients`,
+        url: `${config.API_URI}/clients`,
         responseType: 'json',
         data: {
           ...util.deepPrune(util.deepDecamelize(client))
@@ -270,12 +270,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -283,7 +283,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'put',
-        url: `${consts.API_URI}/clients/private/${client.id}`,
+        url: `${config.API_URI}/clients/private/${client.id}`,
         responseType: 'json',
         withCredentials: true,
         data: {
@@ -296,12 +296,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -309,7 +309,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'delete',
-        url: `${consts.API_URI}/clients/private/${client.id}`,
+        url: `${config.API_URI}/clients/private/${client.id}`,
         withCredentials: true
       })
         .then(() => {
@@ -319,12 +319,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -332,7 +332,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'post',
-        url: `${consts.API_URI}/resources/login`,
+        url: `${config.API_URI}/resources/login`,
         withCredentials: true,
         responseType: 'json',
         data: {
@@ -348,12 +348,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -361,7 +361,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'get',
-        url: `${consts.API_URI}/resources`,
+        url: `${config.API_URI}/resources`,
         responseType: 'json'
       })
         .then((resp) => {
@@ -371,12 +371,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -384,7 +384,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'get',
-        url: `${consts.API_URI}/resources/${id}`,
+        url: `${config.API_URI}/resources/${id}`,
         responseType: 'json'
       })
         .then((resp) => {
@@ -394,12 +394,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -410,7 +410,7 @@ const actions = {
       }
       axios({
         method: 'get',
-        url: `${consts.API_URI}/resources/private/${id}`,
+        url: `${config.API_URI}/resources/private/${id}`,
         withCredentials: true,
         responseType: 'json'
       })
@@ -426,13 +426,13 @@ const actions = {
               return
             }
             commit('updateResourceSavedId', { id: null })
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
           commit('updateResourceSavedId', { id: null })
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -440,7 +440,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'post',
-        url: `${consts.API_URI}/resources`,
+        url: `${config.API_URI}/resources`,
         responseType: 'json',
         data: {
           ...util.deepPrune(util.deepDecamelize(resource))
@@ -452,12 +452,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -465,7 +465,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'put',
-        url: `${consts.API_URI}/resources/private/${resource.id}`,
+        url: `${config.API_URI}/resources/private/${resource.id}`,
         responseType: 'json',
         withCredentials: true,
         data: {
@@ -478,12 +478,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -491,7 +491,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'delete',
-        url: `${consts.API_URI}/resources/private/${resource.id}`,
+        url: `${config.API_URI}/resources/private/${resource.id}`,
         withCredentials: true
       })
         .then(() => {
@@ -501,12 +501,12 @@ const actions = {
         .catch((e) => {
           if (e.response && e.response.data) {
             Vue.$log.error(e.response)
-            const msg = e.response.data.error_description || consts.UNEXPECTED_ERROR_MESSAGE
+            const msg = e.response.data.error_description || config.UNEXPECTED_ERROR_MESSAGE
             reject(new Error(msg))
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -534,7 +534,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'get',
-        url: `${consts.API_URI}/oidc/authorize`,
+        url: `${config.API_URI}/oidc/authorize`,
         responseType: 'json',
         withCredentials: true,
         params
@@ -551,7 +551,7 @@ const actions = {
             return
           }
           Vue.$log.error(resp)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
         .catch((e) => {
           if (e.response && e.response.status === 401) {
@@ -559,7 +559,7 @@ const actions = {
             return
           }
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   },
@@ -567,7 +567,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios({
         method: 'post',
-        url: `${consts.API_URI}/oidc/accept`,
+        url: `${config.API_URI}/oidc/accept`,
         responseType: 'json',
         withCredentials: true,
         data: {
@@ -581,11 +581,11 @@ const actions = {
             return
           }
           Vue.$log.error(resp)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
         .catch((e) => {
           Vue.$log.error(e)
-          reject(new Error(consts.UNEXPECTED_ERROR_MESSAGE))
+          reject(new Error(config.UNEXPECTED_ERROR_MESSAGE))
         })
     })
   }
@@ -605,25 +605,25 @@ const mutations = {
   },
   updateEndUserSavedId (state, { id }) {
     if (id) {
-      localStorage.setItem(consts.END_USER_ID_LOCAL_STORAGE_KEY, id)
+      localStorage.setItem(config.END_USER_ID_LOCAL_STORAGE_KEY, id)
     } else {
-      localStorage.removeItem(consts.END_USER_ID_LOCAL_STORAGE_KEY)
+      localStorage.removeItem(config.END_USER_ID_LOCAL_STORAGE_KEY)
     }
     state.endUser.savedId = id
   },
   updateClientSavedId (state, { id }) {
     if (id) {
-      localStorage.setItem(consts.CLIENT_ID_LOCAL_STORAGE_KEY, id)
+      localStorage.setItem(config.CLIENT_ID_LOCAL_STORAGE_KEY, id)
     } else {
-      localStorage.removeItem(consts.CLIENT_ID_LOCAL_STORAGE_KEY)
+      localStorage.removeItem(config.CLIENT_ID_LOCAL_STORAGE_KEY)
     }
     state.client.savedId = id
   },
   updateResourceSavedId (state, { id }) {
     if (id) {
-      localStorage.setItem(consts.RESOURCE_ID_LOCAL_STORAGE_KEY, id)
+      localStorage.setItem(config.RESOURCE_ID_LOCAL_STORAGE_KEY, id)
     } else {
-      localStorage.removeItem(consts.RESOURCE_ID_LOCAL_STORAGE_KEY)
+      localStorage.removeItem(config.RESOURCE_ID_LOCAL_STORAGE_KEY)
     }
     state.resource.savedId = id
   },

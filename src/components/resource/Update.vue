@@ -106,7 +106,7 @@
 <script>
   import { mapActions, mapMutations, mapState } from 'vuex'
   import moment from 'moment-timezone'
-  import consts from '../../consts'
+  import config from '../../config'
 
   export default {
     mounted: function () {
@@ -184,7 +184,7 @@
           .then(() => {
             this.updateAlertMessage({
               alertType: 'success',
-              alertMessage: consts.UPDATE_SUCCESS_MESSAGE
+              alertMessage: config.UPDATE_SUCCESS_MESSAGE
             })
             this.$router.replace('/resource/login')
           })
@@ -207,7 +207,7 @@
           .then(() => {
             this.updateAlertMessage({
               alertType: 'success',
-              alertMessage: consts.DELETE_SUCCESS_MESSAGE
+              alertMessage: config.DELETE_SUCCESS_MESSAGE
             })
             this.$router.replace('/resource/login')
           })

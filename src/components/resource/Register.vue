@@ -25,6 +25,7 @@
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="inputWebsite"
                                            placeholder="Website" v-model="resource.website">
+                                    <!-- <div class="invalid-feedback text-danger small">hogehogehoge</div> -->
                                 </div>
                             </div>
                             <div class="form-group required">
@@ -72,9 +73,10 @@
 </template>
 
 <script>
+  import validUrl from 'valid-url'
   import { mapActions } from 'vuex'
   import Resource from '../../models/Resource'
-  import consts from '../../consts'
+  import config from '../../config'
 
   export default {
     mounted: function () {
@@ -89,6 +91,12 @@
         },
         additionalScope: [],
         isProcessing: false
+      }
+    },
+    computed: {
+      warningWebsite: function () {
+        console.log(this.resource.website)
+        return this.resource.website && !validUrl.isUri(this.resource.website) ? 'Invalid URL.' : ''
       }
     },
     methods: {
@@ -114,7 +122,7 @@
           .then(() => {
             this.updateAlertMessage({
               alertType: 'success',
-              alertMessage: consts.REGISTER_SUCCESS_MESSAGE
+              alertMessage: config.REGISTER_SUCCESS_MESSAGE
             })
             this.$router.push('/resource/login')
           })

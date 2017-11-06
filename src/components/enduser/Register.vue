@@ -148,7 +148,7 @@
 <script>
   import { mapActions } from 'vuex'
   import EndUser from '../../models/EndUser'
-  import consts from '../../consts'
+  import config from '../../config'
 
   export default {
     mounted: function () {
@@ -180,7 +180,7 @@
           .then(() => {
             this.updateAlertMessage({
               alertType: 'success',
-              alertMessage: consts.REGISTER_SUCCESS_MESSAGE
+              alertMessage: config.REGISTER_SUCCESS_MESSAGE
             })
             this.$router.push('/end_user/login')
           })
