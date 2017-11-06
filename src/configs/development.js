@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   API_URI: 'http://127.0.0.1/api/v1',
   ALERT_MESSAGE_TIMEOUT_MS: 5000,
   END_USER_ID_LOCAL_STORAGE_KEY: 'end_user_key',
