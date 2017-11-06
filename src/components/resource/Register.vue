@@ -84,8 +84,8 @@
       return {
         resource: {},
         scope: {
-          name: null,
-          description: null
+          name: 'openid',
+          description: 'Access to your personal information'
         },
         additionalScope: [],
         isProcessing: false
