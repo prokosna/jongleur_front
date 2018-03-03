@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import VueRouter, { RouteConfig } from 'vue-router'
 import Home from './components/Home.vue'
 import Doc from './components/Doc.vue'
-import EndUserUpdate from './components/enduser/Update.vue'
+import EndUserHome from './components/enduser/Home.vue'
 import EndUserLogin from './components/enduser/Login.vue'
 import EndUserRegister from './components/enduser/Register.vue'
 import Authorize from './components/oidc/Authorize.vue'
@@ -29,10 +29,10 @@ const router = new VueRouter({
       path: '/end_user/login', component: EndUserLogin
     },
     {
-      path: '/end_user/register', component: EndUserRegister
+      path: '/end_user/home', component: EndUserHome
     },
     {
-      path: '/end_user/update', component: EndUserUpdate
+      path: '/end_user/register', component: EndUserRegister
     },
     {
       path: '/authorize', component: Authorize
@@ -54,7 +54,7 @@ const router = new VueRouter({
     },
     {
       path: '/resource/update', component: ResourceUpdate
-    }
+    } as RouteConfig
   ]
 })
 

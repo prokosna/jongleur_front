@@ -1,0 +1,13 @@
+{
+  "ja": {
+    "message": {
+      "unexpectedError": "何かがおかしいです。"
+    }
+  },
+  "en": {
+    "message": {
+      "unexpectedError": "Something went wrong...",
+      "registerSuccess": "New EndUser was successfully registered!"
+    }
+  }
+}

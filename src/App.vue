@@ -1,23 +1,25 @@
 <template>
     <div id="app">
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/"><strong>Jongleur</strong></a>
+                    <a class="navbar-brand" href="/">Jongleur</a>
                 </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a href="/doc">Doc</a></li>
-                        <li><a href="#">Admin</a></li>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/doc">Document</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Admins</a>
+                        </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right" v-if="loggedInAs && loggedInName">
+                    <ul class="navbar-nav navbar-right mr-auto" v-if="loggedInAs && loggedInName">
                         <!-- <li><a href="#">Hi {{ loggedInName }}!</a></li> -->
                         <li><a href="#" @click="logout">Logout</a></li>
                     </ul>
@@ -25,14 +27,16 @@
             </div>
         </nav>
         <div class="container">
-            <alert-display></alert-display>
+            <div class="alert-container">
+                <alert-display></alert-display>
+            </div>
             <router-view></router-view>
         </div>
     </div>
 </template>
 
 <script>
-  import AlertDisplay from './AlertDisplay.vue'
+  import AlertDisplay from './components/AlertDisplay.vue'
   import { mapActions, mapState } from 'vuex'
 
   export default {
@@ -40,7 +44,7 @@
       'alert-display': AlertDisplay
     },
     created: function () {
-      this.initialize()
+      // this.initialize()
     },
     computed: {
       ...mapState({
@@ -73,7 +77,6 @@
 
 <style>
     body {
-        padding-top: 70px;
         font-size: 21px;
     }
 
@@ -81,7 +84,8 @@
         font-size: 21px;
     }
 
-    .form-control {
-        color: #000000;
+    .alert-container {
+        padding: 10px;
+        margin: 0 auto;
     }
 </style>

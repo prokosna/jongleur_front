@@ -112,8 +112,7 @@
 
 <script>
   import { mapActions, mapMutations, mapState } from 'vuex'
-  import moment from 'moment-timezone'
-  import config from '../../config'
+  import config from '../../Config'
 
   export default {
     mounted: function () {
@@ -166,10 +165,10 @@
         stateClient: state => state.client.model
       }),
       createdAt: function () {
-        return moment(this.client.createdAt).format('YYYY-MM-DD HH:mm:ss')
+        return new Date(this.client.createdAt).toString()
       },
       updatedAt: function () {
-        return moment(this.client.updatedAt).format('YYYY-MM-DD HH:mm:ss')
+        return new Date(this.client.updatedAt).toString()
       }
     },
     methods: {

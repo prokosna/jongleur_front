@@ -105,8 +105,7 @@
 
 <script>
   import { mapActions, mapMutations, mapState } from 'vuex'
-  import moment from 'moment-timezone'
-  import config from '../../config'
+  import config from '../../Config'
 
   export default {
     mounted: function () {
@@ -149,10 +148,10 @@
         stateResource: state => state.resource.model
       }),
       createdAt: function () {
-        return moment(this.resource.createdAt).format('YYYY-MM-DD HH:mm:ss')
+        return new Date(this.resource.createdAt).toString()
       },
       updatedAt: function () {
-        return moment(this.resource.updatedAt).format('YYYY-MM-DD HH:mm:ss')
+        return new Date(this.resource.updatedAt).toString()
       }
     },
     methods: {

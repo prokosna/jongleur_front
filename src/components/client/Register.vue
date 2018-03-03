@@ -83,7 +83,7 @@
 <script>
   import { mapActions } from 'vuex'
   import Client from '../../models/Client'
-  import config from '../../config'
+  import config from '../../Config'
 
   export default {
     mounted: function () {

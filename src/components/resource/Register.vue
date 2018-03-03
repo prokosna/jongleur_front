@@ -73,10 +73,10 @@
 </template>
 
 <script>
-  import validUrl from 'valid-url'
   import { mapActions } from 'vuex'
   import Resource from '../../models/Resource'
-  import config from '../../config'
+  import config from '../../Config'
+  import { validateUrl} from '../../utils/validation'
 
   export default {
     mounted: function () {
@@ -96,7 +96,7 @@
     computed: {
       warningWebsite: function () {
         console.log(this.resource.website)
-        return this.resource.website && !validUrl.isUri(this.resource.website) ? 'Invalid URL.' : ''
+        return this.resource.website && !validateUrl(this.resource.website) ? 'Invalid URL.' : ''
       }
     },
     methods: {

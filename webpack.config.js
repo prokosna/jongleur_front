@@ -1,8 +1,12 @@
 const path = require('path')
 const webpack = require('webpack')
+const CompressionPlugin = require('compression-webpack-plugin')
+const zopfli = require('node-zopfli')
+// const HtmlWebpackPlugin = require('html-webpack-plugin')
+// const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin')
 
 module.exports = {
-  entry: './src/main.js',
+  entry: './src/main.ts',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -72,6 +76,12 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
+    }),
+    new CompressionPlugin({
+      test: /\.js$/,
+      algorithm: (content, options, fn) => {
+        zopfli.gzip(content, options, fn)
+      }
     })
   ])
 } else {
@@ -82,3 +92,7 @@ if (process.env.NODE_ENV === 'production') {
     })
   ])
 }
+// module.exports.plugins = (module.exports.plugins || []).concat([
+//   new HtmlWebpackPlugin(),
+//   new DynamicCdnWebpackPlugin(),
+// ])

@@ -5,10 +5,10 @@
         <p>
             This is an experimental implementation of OAuth 2.0, OpenID Connect 1.0 and surrounding specifications.
         </p>
-        <div class="btn-group btn-group-justified">
-            <a href="/end_user/login" class="btn btn-outline">End User</a>
-            <a href="/client/login" class="btn btn-outline">Client</a>
-            <a href="/resource/login" class="btn btn-outline">Resource</a>
+        <div class="btn-group btn-group-justified" role="group">
+            <a href="/end_user/login" class="btn btn-outline-primary btn-lg">End User</a>
+            <a href="/client/login" class="btn btn-outline-success btn-lg">Client</a>
+            <a href="/resource/login" class="btn btn-outline-info btn-lg">Resource</a>
         </div>
     </div>
 </template>
@@ -19,5 +19,8 @@
 <style scoped>
     .btn-outline {
         border: 1px solid;
+    }
+    .btn-lg {
+        margin: 0 10px;
     }
 </style>

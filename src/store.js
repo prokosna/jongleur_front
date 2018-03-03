@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import config from './config'
+import config from './Config'
 import EndUser from './models/EndUser'
 import Client from './models/Client'
 import Resource from './models/Resource'
 import router from './router'
-import util from './util'
+import { snakeToCamel, camelToSnake } from './utils/camelize'
+import { deepFunction, deepPrune } from './utils/deep'
 
 Vue.use(Vuex)
 
@@ -71,7 +72,7 @@ const actions = {
         responseType: 'json'
       })
         .then((resp) => {
-          const model = new EndUser(util.deepCamelize(resp.data))
+          const model = new EndUser(deepFunction(resp.data, snakeToCamel))
           commit('updateEndUserModel', { model })
           resolve()
         })
@@ -100,7 +101,7 @@ const actions = {
         url: `${config.API_URI}/end_users`,
         responseType: 'json',
         data: {
-          ...util.deepPrune(util.deepDecamelize(endUser))
+          ...deepPrune(deepFunction(endUser, snakeToCamel))
         }
       })
         .then(() => {
@@ -126,7 +127,7 @@ const actions = {
         responseType: 'json',
         withCredentials: true,
         data: {
-          ...util.deepPrune(util.deepDecamelize(endUser))
+          ...deepPrune(deepFunction(endUser, camelToSnake))
         }
       })
         .then((resp) => {
@@ -205,7 +206,7 @@ const actions = {
         responseType: 'json'
       })
         .then((resp) => {
-          const client = new Client(util.deepCamelize(resp.data))
+          const client = new Client(deepFunction(resp.data, snakeToCamel))
           resolve(client)
         })
         .catch((e) => {
@@ -233,7 +234,7 @@ const actions = {
         responseType: 'json'
       })
         .then((resp) => {
-          const model = new Client(util.deepCamelize(resp.data))
+          const model = new Client(deepFunction(resp.data, snakeToCamel))
           commit('updateClientModel', { model })
           resolve()
         })
@@ -261,7 +262,7 @@ const actions = {
         url: `${config.API_URI}/clients`,
         responseType: 'json',
         data: {
-          ...util.deepPrune(util.deepDecamelize(client))
+          ...deepPrune(deepFunction(client, camelToSnake))
         }
       })
         .then(() => {
@@ -287,7 +288,7 @@ const actions = {
         responseType: 'json',
         withCredentials: true,
         data: {
-          ...util.deepPrune(util.deepDecamelize(client))
+          ...deepPrune(deepFunction(client, camelToSnake))
         }
       })
         .then((resp) => {
@@ -365,7 +366,7 @@ const actions = {
         responseType: 'json'
       })
         .then((resp) => {
-          const resources = resp.data.map(r => new Resource(util.deepCamelize(r)))
+          const resources = resp.data.map(r => new Resource(deepFunction(r, snakeToCamel)))
           resolve(resources)
         })
         .catch((e) => {
@@ -388,7 +389,7 @@ const actions = {
         responseType: 'json'
       })
         .then((resp) => {
-          const resource = new Resource(util.deepCamelize(resp.data))
+          const resource = new Resource(deepFunction(resp.data, snakeToCamel))
           resolve(resource)
         })
         .catch((e) => {
@@ -415,7 +416,7 @@ const actions = {
         responseType: 'json'
       })
         .then((resp) => {
-          const model = new Resource(util.deepCamelize(resp.data))
+          const model = new Resource(deepFunction(resp.data, snakeToCamel))
           commit('updateResourceModel', { model })
           resolve()
         })
@@ -443,7 +444,7 @@ const actions = {
         url: `${config.API_URI}/resources`,
         responseType: 'json',
         data: {
-          ...util.deepPrune(util.deepDecamelize(resource))
+          ...deepPrune(deepFunction(resource, camelToSnake))
         }
       })
         .then(() => {
@@ -469,7 +470,7 @@ const actions = {
         responseType: 'json',
         withCredentials: true,
         data: {
-          ...util.deepPrune(util.deepDecamelize(resource))
+          ...deepPrune(deepFunction(resource, camelToSnake))
         }
       })
         .then(() => {

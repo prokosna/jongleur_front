@@ -2,196 +2,204 @@
     <div class="content">
         <div class="row">
             <div class="form-container">
-                <div class="well bs-component">
-                    <form class="form-horizontal">
-                        <fieldset>
-                            <legend>New End-User</legend>
-                            <div class="form-group required">
-                                <label for="inputName" class="control-label col-sm-4">Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputName" placeholder="Name"
-                                           v-model="endUser.name">
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="inputEmail" class="control-label col-sm-4">Email</label>
-                                <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="inputEmail" placeholder="Email"
-                                           v-model="endUser.email">
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="inputPassword" class="control-label col-sm-4">Password</label>
-                                <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="inputPassword"
-                                           placeholder="Password" v-model="endUser.password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputGivenName" class="control-label col-sm-4">Given Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputGivenName"
-                                           v-model="endUser.givenName"
-                                           placeholder="Given Name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputFamilyName" class="control-label col-sm-4">Family Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputFamilyName"
-                                           v-model="endUser.familyName"
-                                           placeholder="Family Name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputMiddleName" class="control-label col-sm-4">Middle Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputMiddleName"
-                                           v-model="endUser.middleName"
-                                           placeholder="Middle Name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputNickname" class="control-label col-sm-4">Nickname</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputNickname" placeholder="Nickname"
-                                           v-model="endUser.nickname">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputProfile" class="control-label col-sm-4">Profile</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputProfile" placeholder="Profile"
-                                           v-model="endUser.profile">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPicture" class="control-label col-sm-4">Picture</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputPicture" placeholder="Picture"
-                                           v-model="endUser.picture">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputWebSite" class="control-label col-sm-4">WebSite</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputWebSite" placeholder="Website"
-                                           v-model="endUser.website">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="selectGender" class="control-label col-sm-4">Gender</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="selectGender" v-model="endUser.gender">
-                                        <option>Female</option>
-                                        <option>Male</option>
-                                        <option>Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputBirthdateYear" class="control-label col-sm-4">Birthdate</label>
-                                <div class="col-sm-8 form-inline">
-                                    <select :class="{'form-control': true, placeholder: !birthdateYear }"
-                                            id="inputBirthdateYear" v-model="birthdateYear">
-                                        <option value="" selected disabled>Year</option>
-                                        <option v-for="year in 150">{{ 1899 + year }}</option>
-                                    </select>
-                                    <select :class="{'form-control': true, placeholder: !birthdateMonth }"
-                                            id="inputBirthdateMonth" v-model="birthdateMonth">
-                                        <option value="" selected disabled>Month</option>
-                                        <option v-for="month in 12">{{ month }}</option>
-                                    </select>
-                                    <select :class="{'form-control': true, placeholder: !birthdateDate }"
-                                            id="inputbirthdateDate" v-model="birthdateDate">
-                                        <option value="" selected disabled>Day</option>
-                                        <option v-for="day in 31">{{ day }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputZoneInfo" class="control-label col-sm-4">Zone Info</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputZoneInfo" placeholder="Zone info"
-                                           v-model="endUser.zoneinfo">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputLocale" class="control-label col-sm-4">Locale</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputLocale" placeholder="Locale"
-                                           v-model="endUser.locale">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPhoneNumber" class="control-label col-sm-4">Phone Number</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputPhoneNumber"
-                                           placeholder="Phone number" v-model="endUser.phoneNumber">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-primary btn-block" @click="onRegister">
-                                        Register
-                                    </button>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
+                <form>
+                    <fieldset class="col-sm-10">
+                        <legend>New User</legend>
+                        <div class="form-group">
+                            <field-input v-model="form.name"
+                                         label="Name"
+                                         name="name"
+                                         placeholder="Enter your name"
+                                         :required="true">
+                            </field-input>
+                        </div>
+                        <div class="form-group">
+                            <field-input v-model="form.password"
+                                         label="Password"
+                                         name="password"
+                                         type="password"
+                                         placeholder="Enter your password"
+                                         :required="true">
+                            </field-input>
+                        </div>
+                        <div class="form-group">
+                            <field-input v-model="form.email"
+                                         label="E-mail"
+                                         name="email"
+                                         type="email"
+                                         placeholder="Enter your email"
+                                         :required="true">
+                            </field-input>
+                        </div>
+                        <div class="form-group">
+                            <field-input v-model="form.givenName"
+                                         label="Given Name"
+                                         name="givenName"
+                                         placeholder="Enter your given name">
+                            </field-input>
+                        </div>
+                        <div class="form-group">
+                            <field-input v-model="form.familyName"
+                                         label="Family Name"
+                                         name="familyName"
+                                         placeholder="Enter your family name">
+                            </field-input>
+                        </div>
+                        <div class="form-group">
+                            <field-input v-model="form.middleName"
+                                         label="Middle Name"
+                                         name="middleName"
+                                         placeholder="Enter your middle name">
+                            </field-input>
+                        </div>
+                        <div class="form-group">
+                            <field-input v-model="form.nickname"
+                                         label="Nickname"
+                                         name="nickname"
+                                         placeholder="Enter your nickname">
+                            </field-input>
+                        </div>
+                        <div class="form-group">
+                            <field-input v-model="form.profile"
+                                         label="profile"
+                                         name="profile"
+                                         placeholder="Enter your profile">
+                            </field-input>
+                        </div>
+                        <div class="form-group">
+                            <field-input v-model="form.website"
+                                         label="Website"
+                                         name="website"
+                                         type="url"
+                                         placeholder="Enter your website">
+                            </field-input>
+                        </div>
+                        <div class="form-group">
+                            <field-select v-model="gender"
+                                          label="Gender"
+                                          name="gender"
+                                          :options="genderOptions">
+                            </field-select>
+                        </div>
+                        <div class="form-group">
+                            <field-date v-model="form.birthdate"
+                                        label="Birthdate"
+                                        name="birthdate"
+                                        placeholder="Enter your birthdate">
+                            </field-date>
+                        </div>
+                        <div class="form-group">
+                            <field-input v-model="form.zoneinfo"
+                                         label="Zone Info"
+                                         name="zoneinfo"
+                                         placeholder="Enter your zone info">
+                            </field-input>
+                        </div>
+                        <div class="form-group">
+                            <field-input v-model="form.locale"
+                                         label="Locale"
+                                         name="locale"
+                                         placeholder="Enter your locale">
+                            </field-input>
+                        </div>
+                        <div class="form-group">
+                            <field-input v-model="form.phoneNumber"
+                                         label="Phone Number"
+                                         name="phoneNumber"
+                                         type="tel"
+                                         placeholder="Enter your phone number">
+                            </field-input>
+                        </div>
+                        <a class="btn btn-primary" @click="onRegister">
+                            Register
+                        </a>
+                    </fieldset>
+                </form>
             </div>
         </div>
     </div>
 </template>
 
-<script>
+<script lang="ts">
+  import FieldDate from '../form/FieldDate'
+  import FieldInput from '../form/FieldInput'
+  import FieldSelect from '../form/FieldSelect'
+  import { Gender } from '../../services/enduser/EndUserService'
   import { mapActions } from 'vuex'
-  import EndUser from '../../models/EndUser'
-  import config from '../../config'
+  import { ActionTypeEndUser } from '../../vuex/enduser/Action'
+  import Component from 'vue-class-component'
+  import Vue from 'vue'
 
-  export default {
-    mounted: function () {
-      this.endUser = Object.assign({}, new EndUser())
-    },
-    data: function () {
-      return {
-        endUser: {},
-        birthdateYear: '',
-        birthdateMonth: '',
-        birthdateDate: '',
-        isProcessing: false
+  interface Form {
+    name: string,
+    password: string,
+    email: string,
+    givenName: string,
+    familyName: string,
+    middleName: string,
+    nickname: string,
+    profile: string,
+    picture: string,
+    website: string,
+    gender: string,
+    birthdate: string,
+    zoneinfo: string,
+    locale: string,
+    phoneNumber: string
+  }
+
+  @Component({
+    components: {
+      'field-input': FieldInput,
+      'field-select': FieldSelect,
+      'field-date': FieldDate
+    }
+  })
+  export default class Register extends Vue {
+    form: Form = {
+      name: null,
+      password: null,
+      email: null,
+      givenName: null,
+      familyName: null,
+      middleName: null,
+      nickname: null,
+      profile: null,
+      picture: null,
+      website: null,
+      gender: null,
+      birthdate: null,
+      zoneinfo: null,
+      locale: null,
+      phoneNumber: null
+    }
+    isProcessing: boolean = false
+
+    get gender (): string {
+      return this.form.gender ? Gender[this.form.gender as keyof typeof Gender].toString() : null
+    }
+
+    set gender (value: string) {
+      this.form.gender = Gender[<any>value]
+    }
+
+    get genderOptions () {
+      return [Gender.Female, Gender.Male, Gender.Other]
+    }
+
+    onRegister () {
+      if (this.isProcessing) {
+        return
       }
-    },
-    methods: {
-      ...mapActions([
-        'updateAlertMessage',
-        'registerEndUser'
-      ]),
-      onRegister: function () {
-        if (this.isProcessing) {
-          return
-        }
-        this.isProcessing = true
-        if (this.birthdateYear && this.birthdateMonth && this.birthdateDate) {
-          this.endUser.birthdate = new Date(parseInt(this.birthdateYear), parseInt(this.birthdateMonth) - 1, parseInt(this.birthdateDate)).toISOString()
-        }
-        this.registerEndUser({ endUser: this.endUser })
-          .then(() => {
-            this.updateAlertMessage({
-              alertType: 'success',
-              alertMessage: config.REGISTER_SUCCESS_MESSAGE
-            })
-            this.$router.push('/end_user/login')
-          })
-          .catch(e => this.updateAlertMessage({
-            alertType: 'danger',
-            alertMessage: e.message
-          }))
-          .then(() => {
-            this.isProcessing = false
-          })
-      }
+      this.isProcessing = true
+      this.$store.dispatch(`enduser/${ActionTypeEndUser.REGISTER_END_USER}`, this.form)
+        .then(() => {
+          this.$router.push('/end_user/login')
+          this.isProcessing = false
+        })
+        .catch(() => {
+          this.isProcessing = false
+        })
     }
   }
 </script>
@@ -199,16 +207,7 @@
 <style scoped>
     .form-container {
         padding: 10px;
-        width: 70%;
+        width: 60%;
         margin: 0 auto;
-    }
-
-    .form-group.required .control-label:after {
-        content: "*";
-        color: red;
-    }
-
-    .placeholder {
-        color: #888888;
     }
 </style>
