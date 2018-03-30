@@ -1,13 +1,7 @@
 import RequestService from '../common/RequestService'
 import { ConfigKeys, configService } from '../common/ConfigService'
-import EndUser from '../../models/EndUser'
-import { camelToSnakeObj } from '../../utils/camelize'
-
-enum Gender {
-  Female = 'Female',
-  Male = 'Male',
-  Other = 'Other'
-}
+import EndUser, { Gender } from '../../models/EndUser'
+import { camelToSnakeObj, snakeToCamelObj } from '../../utils/camelize'
 
 interface EndUserRegisterForm {
   name: string
@@ -97,7 +91,7 @@ class EndUserService {
     const ret = await this.requestService.get(url, null, token).catch(e => {
       throw e
     })
-    return Promise.resolve(new EndUser(ret))
+    return Promise.resolve(new EndUser(snakeToCamelObj(ret)))
   }
 
   async update (id: string, form: EndUserUpdateForm, token: string): Promise<void> {
@@ -109,6 +103,7 @@ class EndUserService {
   }
 
   async updatePassword (id: string, form: EndUserUpdatePasswordForm, token: string): Promise<void> {
+    console.log(form)
     const url = `${configService.get(ConfigKeys.ApiUrl)}/end_users/${id}`
     await this.requestService.put(url, null, camelToSnakeObj(form), token).catch(e => {
       throw e
@@ -125,4 +120,4 @@ class EndUserService {
   }
 }
 
-export { EndUserService, Gender, EndUserRegisterForm, EndUserUpdateForm, EndUserUpdatePasswordForm }
+export { EndUserService, EndUserRegisterForm, EndUserUpdateForm, EndUserUpdatePasswordForm }

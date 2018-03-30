@@ -1,8 +1,10 @@
 enum Keys {
   EndUserId = 'enduserid',
+  EndUserSessionToken = 'endusersessiontoken',
   ClientId = 'clientid',
+  ClientSessionToken = 'clientsessiontoken',
   ResourceId = 'resourceid',
-  SessionToken = 'sessiontoken'
+  ResourceSessionToken = 'resourcesessiontoken'
 }
 
 class StorageService {
@@ -12,7 +14,7 @@ class StorageService {
   }
 
   set (key: Keys, value: string) {
-    localStorage.setItem(key as string, value)
+    localStorage.setItem(key as string, value == null ? '' : value)
   }
 
 }

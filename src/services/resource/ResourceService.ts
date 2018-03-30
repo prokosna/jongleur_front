@@ -73,6 +73,14 @@ class ResourceService {
     return Promise.resolve(new Resource(snakeToCamelObj(ret)))
   }
 
+  async getAll (): Promise<Resource[]> {
+    const url = `${configService.get(ConfigKeys.ApiUrl)}/resources`
+    const ret = await this.requestService.get(url, null, null).catch(e => {
+      throw e
+    })
+    return Promise.resolve(ret.map((r: {}) => new Resource(snakeToCamelObj(r))))
+  }
+
   async update (id: string, form: ResourceUpdateForm, token: string): Promise<void> {
     const url = `${configService.get(ConfigKeys.ApiUrl)}/resources/${id}`
     await this.requestService.put(url, null, camelToSnakeObj(form), token).catch(e => {

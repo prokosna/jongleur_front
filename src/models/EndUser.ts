@@ -1,6 +1,12 @@
 import { camelToSnake } from '../utils/camelize'
 import AcceptedClient from './AcceptedClient'
 
+export enum Gender {
+  Female = 'Female',
+  Male = 'Male',
+  Other = 'Other'
+}
+
 class EndUser {
   id: string
   name: string
@@ -13,7 +19,7 @@ class EndUser {
   profile: string
   picture: string
   website: string
-  gender: string
+  gender: Gender
   birthdate: Date
   zoneinfo: string
   locale: string

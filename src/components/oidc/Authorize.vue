@@ -16,7 +16,7 @@
                         <fieldset v-if="isLoggedIn === true">
                             <div class="form-group">
                                 <a type="button" class="col-lg-6 btn btn-primary" @click="onAccept">Accept</a>
-                                <a type="button" class="col-lg-6 btn btn-default" @click="onCancel">No, Thank you</a>
+                                <a type="button" class="col-lg-6 btn btn-secondary" @click="onCancel">No, Thank you</a>
                             </div>
                         </fieldset>
                         <fieldset v-else-if="isLoggedIn === false">

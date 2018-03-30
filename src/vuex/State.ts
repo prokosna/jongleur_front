@@ -5,7 +5,7 @@ export enum AlertType {
   Success = 'Success'
 }
 
-export class State {
+export class RootState {
   alertType: AlertType
   alertMessage: string
   isLoading: boolean
@@ -19,5 +19,5 @@ export class State {
   }
 }
 
-const state = new State()
+const state = new RootState()
 export default state

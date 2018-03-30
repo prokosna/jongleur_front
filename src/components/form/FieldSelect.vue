@@ -1,17 +1,17 @@
 <template>
-    <div>
-        <label class="col-form-label control-label"
-               :class="{required: required}">{{ label }}</label>
-        <select class="form-control"
-                :name="name"
-                :value="value"
-                @input="update"
-        >
-            <option v-for="v in options">
-                {{ v }}
-            </option>
-        </select>
-    </div>
+  <div>
+    <label class="col-form-label control-label"
+           :class="{required: required}">{{ label }}</label>
+    <select class="form-control"
+            :name="name"
+            :value="value"
+            @input="update"
+    >
+      <option v-for="(v, i) in options">
+        {{ inputDisplayOptions ? inputDisplayOptions[i]: v }}
+      </option>
+    </select>
+  </div>
 </template>
 
 <script lang="ts">
@@ -30,7 +30,17 @@
     @Prop()
     options: string[]
     @Prop()
-    required: boolean = false
+    required: boolean
+    @Prop()
+    displayOptions: string[]
+
+    inputRequired: boolean = false
+    inputDisplayOptions: string[] = null
+
+    mounted () {
+      this.inputRequired = this.required || false
+      this.inputDisplayOptions = this.displayOptions || null
+    }
 
     update (event: any) {
       this.$emit('input', event.target.value)
@@ -40,8 +50,8 @@
 </script>
 
 <style scoped>
-    .required:after {
-        content: " *";
-        color: red;
-    }
+  .required:after {
+    content: " *";
+    color: red;
+  }
 </style>

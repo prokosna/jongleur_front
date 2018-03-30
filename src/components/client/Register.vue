@@ -1,160 +1,164 @@
 <template>
-    <div class="content">
-        <div class="row">
-            <div class="form-container">
-                <div class="well bs-component">
-                    <form class="form-horizontal">
-                        <fieldset>
-                            <legend>New Client</legend>
-                            <div class="form-group required">
-                                <label for="inputName" class="control-label col-sm-4">Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputName" placeholder="Name"
-                                           v-model="client.name">
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="inputPassword" class="control-label col-sm-4">Password</label>
-                                <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="inputPassword"
-                                           placeholder="Password" v-model="client.password">
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="selectClientType" class="control-label col-sm-4">Client Type</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="selectClientType" v-model="client.clientType">
-                                        <option>Confidential</option>
-                                        <option>Public</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="inputWebsite" class="control-label col-sm-4">Website</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputWebsite"
-                                           placeholder="Website" v-model="client.website">
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="inputResource" class="control-label col-sm-4">Resource</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="inputResource" v-model="client.resourceId">
-                                        <option v-for="r in resources" :value="r.id">{{ r.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="inputRedirectUri0" class="control-label col-sm-4">Redirect URI</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="inputRedirectUri0"
-                                           placeholder="Redirect URI" v-model="redirectUri">
-                                </div>
-                                <div class="col-sm-1">
-                                    <button type="button" class="btn btn-default" @click="addUriForm">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-group" v-for="(item, index) in additionalRedirectUris">
-                                <div class="col-sm-offset-4 col-sm-7">
-                                    <input type="text" class="form-control" :id="'inputRedirectUri' + index"
-                                           placeholder="Redirect URI" v-model="item.uri">
-                                </div>
-                                <div class="col-sm-1">
-                                    <button type="button" class="btn btn-default" @click="removeUriForm(index)">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <a href="#" class="btn btn-primary btn-block" @click="onRegister">Register</a>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
-        </div>
+  <div class="row">
+    <div class="offset-2 col-10">
+      <h1>New Client</h1>
     </div>
+    <div class="offset-2 col-10">
+      <div class="form-horizontal">
+        <div class="form-group row">
+          <div class="col-10">
+            <field-input v-model="form.name"
+                         label="Name"
+                         name="name"
+                         placeholder="Enter your name"
+                         :required="true"
+            ></field-input>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-10">
+            <field-input v-model="form.password"
+                         label="Password"
+                         name="password"
+                         type="password"
+                         placeholder="Enter your password"
+                         :required="true">
+            </field-input>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-10">
+            <field-select v-model="clientType"
+                          label="Client Type"
+                          name="client_type"
+                          :options="clientTypeOptions"
+                          :required="true">
+            </field-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-10">
+            <field-input v-model="form.website"
+                         label="Website"
+                         name="website"
+                         type="url"
+                         placeholder="Enter your website"
+                         :required="true"
+            >
+            </field-input>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-10">
+            <field-select v-model="form.resourceId"
+                          label="Resource"
+                          name="resource"
+                          :options="resources.map(r => r.id)"
+                          :displayOptions="resources.map(r => r.name)"
+                          :required="true">
+            </field-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-10">
+            <field-input-list v-model="form.redirectUris"
+                              label="Redirect URI"
+                              name="redirect_uris"
+                              placeholder="Enter a full URI"
+                              :required="true"
+            ></field-input-list>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-2">
+            <a class="btn btn-primary btn-block" @click="onRegister">
+              Register
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-  import { mapActions } from 'vuex'
-  import Client from '../../models/Client'
-  import config from '../../Config'
+<script lang="ts">
+  import Vue from 'vue'
+  import Component from 'vue-class-component'
+  import FieldDate from '../form/FieldDate'
+  import FieldInput from '../form/FieldInput'
+  import FieldSelect from '../form/FieldSelect'
+  import FieldInputList from '../form/FieldInputList'
+  import { ClientRegisterForm } from '../../services/client/ClientService'
+  import ClientType from '../../models/ClientType'
+  import { ActionTypeClient } from '../../vuex/client/Action'
+  import Resource from "../../models/Resource"
+  import { ResourceService } from "../../services/resource/ResourceService"
+  import { ActionType } from "../../vuex/Action"
+  import { AlertType } from "../../vuex/State"
 
-  export default {
-    mounted: function () {
-      this.client = Object.assign({}, new Client())
-      this.getResources()
+  @Component({
+    components: {
+      'field-input': FieldInput,
+      'field-select': FieldSelect,
+      'field-date': FieldDate,
+      'field-input-list': FieldInputList
+    }
+  })
+  export default class Register extends Vue {
+    resourceService = new ResourceService()
+    form: ClientRegisterForm = {
+      name: null,
+      password: null,
+      website: null,
+      clientType: null,
+      redirectUris: [],
+      resourceId: null
+    }
+    isProcessing: boolean = false
+    resources: Resource[] = []
+
+    get clientType (): string {
+      return this.form.clientType ? ClientType[this.form.clientType as keyof typeof ClientType].toString() : null
+    }
+
+    set clientType (value: string) {
+      this.form.clientType = ClientType[value as keyof typeof ClientType]
+    }
+
+    get clientTypeOptions () {
+      return [ClientType.Confidential, ClientType.Public]
+    }
+
+    mounted () {
+      this.resourceService.getAll()
         .then((ret) => {
           this.resources = ret
         })
-        .catch(e => this.updateAlertMessage({
-          alertType: 'danger',
-          alertMessage: e.message
-        }))
-    },
-    data () {
-      return {
-        client: {},
-        redirectUri: null,
-        additionalRedirectUris: [],
-        resources: [],
-        isProcessing: false
-      }
-    },
-    methods: {
-      ...mapActions([
-        'updateAlertMessage',
-        'registerClient',
-        'getResources'
-      ]),
-      addUriForm: function () {
-        this.additionalRedirectUris.push({ uri: null })
-      },
-      removeUriForm: function (index) {
-        this.additionalRedirectUris.splice(index, 1)
-      },
-      onRegister: function () {
-        if (this.isProcessing) {
-          return
-        }
-        this.isProcessing = true
-        this.client.redirectUris = [this.redirectUri, ...this.additionalRedirectUris.map(v => v.uri)]
-        this.registerClient({
-          client: this.client
+        .catch((e) => {
+          const msg = e.error || 'unexpectedError'
+          return this.$store.dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg })
         })
-          .then(() => {
-            this.updateAlertMessage({
-              alertType: 'success',
-              alertMessage: config.REGISTER_SUCCESS_MESSAGE
-            })
-            this.$router.push('/client/login')
-          })
-          .catch(e => this.updateAlertMessage({
-            alertType: 'danger',
-            alertMessage: e.message
-          }))
-          .then(() => {
-            this.isProcessing = false
-          })
+        .catch(() => {
+          this.$router.push('/')
+        })
+    }
+
+    onRegister () {
+      if (this.isProcessing) {
+        return
       }
+      this.isProcessing = true
+      this.$store.dispatch(`client/${ActionTypeClient.REGISTER_CLIENT}`, this.form)
+        .then(() => {
+          this.$router.push('/client/login')
+          this.isProcessing = false
+        })
+        .catch(() => {
+          this.isProcessing = false
+        })
     }
   }
 </script>
 
 <style scoped>
-    .form-container {
-        padding: 10px;
-        width: 70%;
-        margin: 0 auto;
-    }
-
-    .form-group.required .control-label:after {
-        content: "*";
-        color: red;
-    }
 </style>

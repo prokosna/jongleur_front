@@ -62,7 +62,7 @@
                                            v-model="redirectUri">
                                 </div>
                                 <div class="col-sm-1">
-                                    <button type="button" class="btn btn-default" @click="addUriForm">
+                                    <button type="button" class="btn btn-secondary" @click="addUriForm">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>
@@ -73,7 +73,7 @@
                                            v-model="item.uri">
                                 </div>
                                 <div class="col-sm-1">
-                                    <button type="button" class="btn btn-default" @click="removeUriForm(index)">
+                                    <button type="button" class="btn btn-secondary" @click="removeUriForm(index)">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>

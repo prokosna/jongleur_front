@@ -51,7 +51,7 @@
                                            placeholder="Description" v-model="scope.description">
                                 </div>
                                 <div class="col-sm-1">
-                                    <button type="button" class="btn btn-default" @click="addScopeForm">
+                                    <button type="button" class="btn btn-secondary" @click="addScopeForm">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>
@@ -66,7 +66,7 @@
                                            placeholder="Description" v-model="item.description">
                                 </div>
                                 <div class="col-sm-1">
-                                    <button type="button" class="btn btn-default" @click="removeScopeForm(index)">
+                                    <button type="button" class="btn btn-secondary" @click="removeScopeForm(index)">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>

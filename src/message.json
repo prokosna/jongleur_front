@@ -7,7 +7,9 @@
   "en": {
     "message": {
       "unexpectedError": "Something went wrong...",
-      "registerSuccess": "New EndUser was successfully registered!"
+      "registerSuccess": "New EndUser was successfully registered!",
+      "updateSuccess": "Successfully updated!",
+      "loginRequired": "Login is required."
     }
   }
 }

@@ -1,5 +1,5 @@
-import { ActionTree } from 'vuex'
-import { AlertType, State } from './State'
+import { Action, ActionTree } from 'vuex'
+import { AlertType, RootState } from './State'
 import { MutationType } from './Mutation'
 import { ConfigKeys, configService } from '../services/common/ConfigService'
 
@@ -12,12 +12,18 @@ export interface UpdateAlertMessageCmd {
   message: string,
 }
 
-const actions: ActionTree<State, State> = {
+let timer: number = null
+
+const actions: ActionTree<RootState, RootState> = {
   [ActionType.UPDATE_ALERT_MESSAGE]: function ({ commit }, payload: UpdateAlertMessageCmd) {
+    if (timer != null) {
+      clearTimeout(timer)
+    }
     commit(MutationType.UPDATE_ALERT_MESSAGE, { type: payload.type, message: payload.message })
-    // setTimeout(() => {
-    //   commit(MutationType.UPDATE_ALERT_MESSAGE, { type: null, message: null })
-    // }, configService.get(ConfigKeys.AlertMessageTimeout))
+    timer = setTimeout(() => {
+      commit(MutationType.UPDATE_ALERT_MESSAGE, { type: null, message: null })
+      timer = null
+    }, configService.get(ConfigKeys.AlertMessageTimeout))
   }
 }
 

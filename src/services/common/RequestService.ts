@@ -1,6 +1,5 @@
 import * as qs from 'qs'
 import axios from 'axios'
-import Vue from 'vue'
 
 class RequestService {
   get (url: string, params: {}, token: string): Promise<any> {
@@ -21,7 +20,7 @@ class RequestService {
       })
         .then(resp => resolve(resp.data))
         .catch(e => {
-          Vue.$log.error(e)
+          console.error(e)
           reject(e.response ? e.response.data : e)
         })
     })
@@ -46,7 +45,7 @@ class RequestService {
       })
         .then(resp => resolve(resp.data))
         .catch(e => {
-          Vue.$log.error(e)
+          console.error(e)
           reject(e.response ? e.response.data : e)
         })
     })
@@ -71,7 +70,7 @@ class RequestService {
       })
         .then(resp => resolve(resp.data))
         .catch(e => {
-          Vue.$log.error(e)
+          console.error(e)
           reject(e.response ? e.response.data : e)
         })
     })
@@ -96,7 +95,7 @@ class RequestService {
       })
         .then(resp => resolve(resp.data))
         .catch(e => {
-          Vue.$log.error(e)
+          console.error(e)
           reject(e.response ? e.response.data : e)
         })
     })

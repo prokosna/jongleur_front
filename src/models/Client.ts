@@ -13,12 +13,12 @@ class Client {
   createdAt: Date
   updatedAt: Date
 
-  constructor(obj: any) {
+  constructor (obj: any) {
     this.id = obj.id
     this.name = obj.name
     this.password = obj.password
     this.website = obj.website
-    this.clientType = obj.clientType === 'confidential' ? ClientType.Confidential : ClientType.Public
+    this.clientType = obj.clientType ? ClientType[obj.clientType as keyof typeof ClientType] : ClientType.Public
     this.clientSecret = obj.clientSecret
     this.resourceId = obj.resourceId
     this.redirectUris = obj.redirectUris
