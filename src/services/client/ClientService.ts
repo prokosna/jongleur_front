@@ -18,7 +18,6 @@ interface ClientUpdateForm {
   website: string
   clientType: ClientType
   redirectUris: string[]
-  resourceId: string
 }
 
 interface ClientUpdatePasswordForm {

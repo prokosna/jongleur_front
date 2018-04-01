@@ -249,9 +249,4 @@
 </script>
 
 <style scoped>
-  .form-container {
-    padding: 10px;
-    width: 70%;
-    margin: 0 auto;
-  }
 </style>

@@ -1,257 +1,180 @@
 <template>
-    <div class="content">
-        <div class="row">
-            <div class="form-container">
-                <div class="well bs-component">
-                    <form class="form-horizontal">
-                        <fieldset>
-                            <legend><h3>Hi {{ client.name }}!</h3></legend>
-                            <div class="form-group">
-                                <label for="inputId" class="control-label col-sm-4">ID</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputId" placeholder="Id"
-                                           v-model="client.id" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="inputName" class="control-label col-sm-4">Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputName" v-model="client.name">
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="inputPassword" class="control-label col-sm-4">Password</label>
-                                <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="inputPassword"
-                                           v-model="client.password">
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="selectClientType" class="control-label col-sm-4">Client Type</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="selectClientType" v-model="client.clientType">
-                                        <option>Confidential</option>
-                                        <option>Public</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label for="inputWebsite" class="control-label col-sm-4">Website</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputWebsite" v-model="client.website">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputSecret" class="control-label col-sm-4">Secret</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputSecret"
-                                           v-model="client.clientSecret" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputResource" class="control-label col-sm-4">Resource</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputResource"
-                                           v-model="resourceName" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputRedirectUri0" class="control-label col-sm-4">Redirect URI</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="inputRedirectUri0"
-                                           v-model="redirectUri">
-                                </div>
-                                <div class="col-sm-1">
-                                    <button type="button" class="btn btn-secondary" @click="addUriForm">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-group" v-for="(item, index) in additionalRedirectUris">
-                                <div class="col-sm-offset-4 col-sm-7">
-                                    <input type="text" class="form-control" :id="'inputRedirectUri' + index"
-                                           v-model="item.uri">
-                                </div>
-                                <div class="col-sm-1">
-                                    <button type="button" class="btn btn-secondary" @click="removeUriForm(index)">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputCreatedAt" class="control-label col-sm-4">Created</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputCreatedAt"
-                                           v-model="createdAt" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputUpdatedAt" class="control-label col-sm-4">Updated</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputUpdatedAt"
-                                           v-model="updatedAt" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <a href="#" class="btn btn-primary btn-block" @click="onUpdate">Update</a>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <a href="#" class="btn btn-danger btn-block" @click="onDelete">Delete</a>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-8">
+      <div class="form-horizontal">
+        <div class="form-group row">
+          <div class="col-12">
+            <field-input v-model="id"
+                         label="ID"
+                         name="id"
+                         :readonly="true">
+            </field-input>
+          </div>
         </div>
+        <div class="form-group row">
+          <div class="col-12">
+            <field-input v-model="form.name"
+                         label="Name"
+                         name="name"
+                         placeholder="Enter client name"
+                         :required="true">
+            </field-input>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-12">
+            <field-select v-model="clientType"
+                          label="Client Type"
+                          name="clientType"
+                          :required="true"
+                          :options="clientTypeOptions">
+            </field-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-12">
+            <field-input v-model="form.website"
+                         label="Website"
+                         name="website"
+                         placeholder="Enter client website"
+                         :required="true">
+            </field-input>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-12">
+            <field-input v-model="secret"
+                         label="Secret"
+                         name="secret"
+                         :readonly="true">
+            </field-input>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-12">
+            <field-input v-model="resource"
+                         label="Resource"
+                         name="resource"
+                         :readonly="true">
+            </field-input>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-10">
+            <field-input-list v-model="form.redirectUris"
+                              label="Redirect URI"
+                              name="redirect_uris"
+                              placeholder="Enter a full URI"
+                              :required="true"
+            ></field-input-list>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-12">
+            <a class="btn btn-primary" @click="onUpdate">
+              Update
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
-<script>
-  import { mapActions, mapMutations, mapState } from 'vuex'
-  import config from '../../Config'
+<script lang="ts">
+  import Vue from 'vue'
+  import Component from 'vue-class-component'
+  import { mapState } from 'vuex'
+  import { State } from '../../vuex/client/State'
+  import FieldInput from '../form/FieldInput'
+  import FieldSelect from '../form/FieldSelect'
+  import FieldInputList from '../form/FieldInputList'
+  import Client from '../../models/Client'
+  import { ClientUpdateForm } from '../../services/client/ClientService'
+  import ClientType from '../../models/ClientType'
+  import { ResourceService } from '../../services/resource/ResourceService'
+  import { ActionType } from '../../vuex/Action'
+  import { AlertType } from '../../vuex/State'
+  import { ActionTypeClient } from "../../vuex/client/Action"
 
-  export default {
-    mounted: function () {
-      if (!this.savedId) {
-        this.updateClientSavedId()
-        this.$router.replace('/client/login')
-        return
-      }
-      this.getCurrentClient({ id: this.savedId })
-        .then(() => {
-          this.updateLoggedInAs({ loggedInAs: 'client' })
-          this.client = Object.assign({}, this.stateClient)
-          this.redirectUri = this.client.redirectUris[0]
-          this.additionalRedirectUris = this.client.redirectUris.slice(1).map(v => ({ uri: v }))
-        })
-        .catch((e) => {
-          if (e) {
-            this.updateAlertMessage({
-              alertType: 'danger',
-              alertMessage: e.message
-            })
-          }
-          this.$router.replace('/client/login')
-        })
-        .then(() => this.getResource({ id: this.client.resourceId }))
-        .then((ret) => {
-          this.resourceName = ret.name
-        })
-        .catch((e) => {
-          if (e) {
-            this.updateAlertMessage({
-              alertType: 'danger',
-              alertMessage: e.message
-            })
-          }
-        })
-    },
-    data: function () {
-      return {
-        client: {},
-        redirectUri: {},
-        additionalRedirectUris: [],
-        resourceName: null,
-        isProcessing: false
-      }
+  @Component({
+    components: {
+      'field-input': FieldInput,
+      'field-select': FieldSelect,
+      'field-input-list': FieldInputList
     },
     computed: {
-      ...mapState({
-        savedId: state => state.client.savedId,
-        stateClient: state => state.client.model
-      }),
-      createdAt: function () {
-        return new Date(this.client.createdAt).toString()
-      },
-      updatedAt: function () {
-        return new Date(this.client.updatedAt).toString()
+      ...mapState('client', {
+        client: (state: State) => state.client
+      })
+    }
+  })
+  export default class Update extends Vue {
+    resourceService = new ResourceService()
+
+    id: string = ''
+    secret: string = ''
+    resource: string = ''
+    form: ClientUpdateForm = {
+      name: null,
+      website: null,
+      clientType: null,
+      redirectUris: null
+    }
+    client: Client
+
+    isProcessing: boolean = false
+
+    get clientType (): string {
+      return this.form.clientType ? ClientType[this.form.clientType as keyof typeof ClientType].toString() : null
+    }
+
+    set clientType (value: string) {
+      this.form.clientType = ClientType[value as keyof typeof ClientType]
+    }
+
+    get clientTypeOptions () {
+      return [ClientType.Confidential, ClientType.Public]
+    }
+
+    mounted () {
+      this.id = this.client.id
+      this.secret = this.client.clientSecret
+      this.form = {
+        name: this.client.name,
+        website: this.client.website,
+        clientType: this.client.clientType,
+        redirectUris: this.client.redirectUris
       }
-    },
-    methods: {
-      ...mapActions([
-        'updateAlertMessage',
-        'getCurrentClient',
-        'updateClient',
-        'deleteClient',
-        'getResource'
-      ]),
-      ...mapMutations([
-        'updateLoggedInAs',
-        'updateClientSavedId'
-      ]),
-      addUriForm: function () {
-        this.additionalRedirectUris.push({ uri: null })
-      },
-      removeUriForm: function (index) {
-        this.additionalRedirectUris.splice(index, 1)
-      },
-      onUpdate: function () {
-        if (this.isProcessing) {
-          return
-        }
-        this.isProcessing = true
-        this.client.redirectUris = [this.redirectUri, ...this.additionalRedirectUris.map(v => v.uri)]
-        this.updateClient({
-          client: this.client
+      const resourceId = this.client.resourceId
+      this.resourceService.get(resourceId, null)
+        .then((ret) => {
+          this.resource = ret.name
         })
-          .then(() => {
-            this.updateAlertMessage({
-              alertType: 'success',
-              alertMessage: config.UPDATE_SUCCESS_MESSAGE
-            })
-            this.$router.replace('/client/login')
-          })
-          .catch(e => this.updateAlertMessage({
-            alertType: 'danger',
-            alertMessage: e.message
-          }))
-          .then(() => {
-            this.isProcessing = false
-          })
-      },
-      onDelete: function () {
-        if (this.isProcessing) {
-          return
-        }
-        this.isProcessing = true
-        this.deleteClient({
-          client: this.client
+        .catch((e) => {
+          const msg = e.error || 'unexpectedError'
+          return this.$store.dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg })
         })
-          .then(() => {
-            this.updateAlertMessage({
-              alertType: 'success',
-              alertMessage: config.DELETE_SUCCESS_MESSAGE
-            })
-            this.$router.replace('/client/login')
-          })
-          .catch(e => this.updateAlertMessage({
-            alertType: 'danger',
-            alertMessage: e.message
-          }))
-          .then(() => {
-            this.isProcessing = false
-          })
-      },
-      beforeDestroy: function () {
-        this.updateLoggedInAs({ loggedInAs: null })
+        .catch(() => {
+          this.$router.push('/')
+        })
+    }
+
+    onUpdate () {
+      if (this.isProcessing) {
+        return
       }
+      this.isProcessing = true
+      this.$store.dispatch(`client/${ActionTypeClient.UPDATE_CLIENT}`, this.form)
+        .then(() => {
+          this.isProcessing = false
+        })
+        .catch(() => {
+          this.isProcessing = false
+        })
     }
   }
 </script>
 
 <style scoped>
-    .form-container {
-        padding: 10px;
-        width: 70%;
-        margin: 0 auto;
-    }
-
-    .form-group.required .control-label:after {
-        content: "*";
-        color: red;
-    }
 </style>
