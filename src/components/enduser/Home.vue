@@ -8,8 +8,6 @@
            aria-controls="v-pills-account" aria-selected="false">Account</a>
         <a class="nav-link" id="v-pills-applications-tab" data-toggle="pill" href="#v-pills-applications" role="tab"
            aria-controls="v-pills-applications" aria-selected="false">Applications</a>
-        <a class="nav-link" id="v-pills-keys-tab" data-toggle="pill" href="#v-pills-keys" role="tab"
-           aria-controls="v-pills-keys" aria-selected="false">Keys</a>
         <a class="nav-link" id="v-pills-activities-tab" data-toggle="pill" href="#v-pills-activities" role="tab"
            aria-controls="v-pills-activities" aria-selected="false">Activities</a>
       </div>
@@ -25,15 +23,15 @@
         </div>
         <div class="tab-pane fade" id="v-pills-applications" role="tabpanel"
              aria-labelledby="v-pills-applications-tab">
-          <p>メッセージの文章です。...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
-        </div>
-        <div class="tab-pane fade" id="v-pills-keys" role="tabpanel" aria-labelledby="v-pills-keys-tab">
-          <p>セッティングの文章です。...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+          <p>Not implemented...</p>
         </div>
         <div class="tab-pane fade" id="v-pills-activities" role="tabpanel" aria-labelledby="v-pills-activities-tab">
-          <p>セッティングの文章です。...</p>
+          <p>Not implemented...</p>
         </div>
       </div>
+    </div>
+    <div>
+      <modals-container/>
     </div>
   </div>
 </template>
@@ -65,7 +63,7 @@
     mounted () {
       // check if logged in
       if (!this.endUser) {
-        this.$router.replace('/end_user/login')
+        this.$router.replace('/enduser/login')
         return
       }
       this.$store.commit(MutationType.UPDATE_LOGGED_IN_AS, 'enduser')

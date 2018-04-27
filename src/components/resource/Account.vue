@@ -52,11 +52,11 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import FieldInput from '../form/FieldInput'
-  import { EndUserUpdatePasswordForm } from '../../services/enduser/EndUserService'
+  import { ResourceUpdatePasswordForm } from '../../services/resource/ResourceService'
   import { mapState } from 'vuex'
-  import { State } from '../../vuex/enduser/State'
-  import EndUser from '../../models/EndUser'
-  import { ActionTypeEndUser } from '../../vuex/enduser/Action'
+  import { State } from '../../vuex/resource/State'
+  import Resource from '../../models/Resource'
+  import { ActionTypeResource } from '../../vuex/resource/Action'
   import { Watch } from 'vue-property-decorator'
   import ModalCommon from '../common/ModalCommon'
 
@@ -65,24 +65,24 @@
       'field-input': FieldInput
     },
     computed: {
-      ...mapState('enduser', {
-        endUser: (state: State) => state.endUser
+      ...mapState('resource', {
+        resource: (state: State) => state.resource
       })
     }
   })
   export default class Account extends Vue {
     id: string = ''
-    form: EndUserUpdatePasswordForm = {
+    form: ResourceUpdatePasswordForm = {
       newPassword: null,
       currentPassword: null
     }
     newPasswordAgain: string = null
     isProcessing: boolean = false
-    endUser: EndUser
+    resource: Resource
 
-    @Watch('endUser')
-    onEndUserChanged (endUser: EndUser) {
-      this.id = endUser.id
+    @Watch('resource')
+    onResourceChanged (resource: Resource) {
+      this.id = resource.id
     }
 
     mounted () {
@@ -97,7 +97,7 @@
         return
       }
       this.isProcessing = true
-      this.$store.dispatch(`enduser/${ActionTypeEndUser.UPDATE_END_USER_PASSWORD}`, { id: this.id, form: this.form })
+      this.$store.dispatch(`resource/${ActionTypeResource.UPDATE_RESOURCE_PASSWORD}`, { id: this.id, form: this.form })
         .then(() => {
           this.isProcessing = false
         })
@@ -126,9 +126,9 @@
             type: 'primary',
             label: 'Delete',
             callback: () => {
-              this.$store.dispatch(`enduser/${ActionTypeEndUser.DELETE_SELF}`)
+              this.$store.dispatch(`resource/${ActionTypeResource.DELETE_SELF}`)
                 .then(() => {
-                  this.$router.push('/enduser/login')
+                  this.$router.push('/resource/login')
                 })
                 .catch(() => {
                 })
@@ -147,3 +147,4 @@
 
 <style scoped>
 </style>
+

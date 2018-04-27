@@ -215,7 +215,7 @@
       this.isProcessing = true
       this.$store.dispatch(`enduser/${ActionTypeEndUser.REGISTER_END_USER}`, this.form)
         .then(() => {
-          this.$router.push('/end_user/login')
+          this.$router.push('/enduser/login')
           this.isProcessing = false
         })
         .catch(() => {

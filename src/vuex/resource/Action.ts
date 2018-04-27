@@ -20,6 +20,7 @@ export class ActionTypeResource {
   static LOGIN_AS_RESOURCE = 'LOGIN_AS_RESOURCE'
   static UPDATE_RESOURCE = 'UPDATE_RESOURCE'
   static UPDATE_RESOURCE_PASSWORD = 'UPDATE_RESOURCE_PASSWORD'
+  static DELETE_SELF = 'DELETE_SELF'
 }
 
 const actions: ActionTree<State, RootState> = {
@@ -30,13 +31,17 @@ const actions: ActionTree<State, RootState> = {
       if (!id || !token) {
         storageService.set(Keys.ResourceId, null)
         storageService.set(Keys.ResourceSessionToken, null)
-        dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: 'loginRequired' }, { root: true })
-        return Promise.reject(new Error('loginRequired'))
+        dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: 'login_required' }, { root: true })
+        return Promise.reject(new Error('login_required'))
       }
       const resource = await resourceService.get(id, token)
       commit(MutationTypeResource.SET_RESOURCE, resource)
     } catch (e) {
-      const msg = e.error || 'unexpectedError'
+      if (e && e.status && e.status >= 400 && e.status < 500) {
+        storageService.set(Keys.ResourceId, null)
+        storageService.set(Keys.ResourceSessionToken, null)
+      }
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
       dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
       return Promise.reject(e)
     }
@@ -44,10 +49,10 @@ const actions: ActionTree<State, RootState> = {
   [ActionTypeResource.REGISTER_RESOURCE]: async function ({ dispatch }, form: ResourceRegisterForm): Promise<any> {
     try {
       await resourceService.register(form)
-      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'registerSuccess' }, { root: true })
+      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'register_success' }, { root: true })
       return Promise.resolve()
     } catch (e) {
-      const msg = e.error || 'unexpectedError'
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
       dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
       return Promise.reject(e)
     }
@@ -57,10 +62,9 @@ const actions: ActionTree<State, RootState> = {
       const [sid, resourceId] = await resourceService.login(form.name, form.password)
       storageService.set(Keys.ResourceSessionToken, sid)
       storageService.set(Keys.ResourceId, resourceId)
-      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'loginSuccess' }, { root: true })
       return Promise.resolve()
     } catch (e) {
-      const msg = e.error || 'unexpectedError'
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
       dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
       return Promise.reject(e)
     }
@@ -68,11 +72,15 @@ const actions: ActionTree<State, RootState> = {
   [ActionTypeResource.UPDATE_RESOURCE]: async function ({ dispatch, commit }, params: { id: string, form: ResourceUpdateForm }): Promise<any> {
     try {
       await resourceService.update(params.id, params.form, storageService.get(Keys.ResourceSessionToken))
-      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'updateSuccess' }, { root: true })
+      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'update_success' }, { root: true })
       const resource = await resourceService.get(params.id, storageService.get(Keys.ResourceSessionToken))
       commit(MutationTypeResource.SET_RESOURCE, resource)
     } catch (e) {
-      const msg = e.error || 'unexpectedError'
+      if (e && e.status && e.status >= 400 && e.status < 500) {
+        storageService.set(Keys.ResourceId, null)
+        storageService.set(Keys.ResourceSessionToken, null)
+      }
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
       dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
       return Promise.reject(e)
     }
@@ -81,11 +89,33 @@ const actions: ActionTree<State, RootState> = {
     try {
       console.log(params.form)
       await resourceService.updatePassword(params.id, params.form, storageService.get(Keys.ResourceSessionToken))
-      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'updateSuccess' }, { root: true })
+      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'update_success' }, { root: true })
       const resource = await resourceService.get(params.id, storageService.get(Keys.ResourceSessionToken))
       commit(MutationTypeResource.SET_RESOURCE, resource)
     } catch (e) {
-      const msg = e.error || 'unexpectedError'
+      if (e && e.status && e.status >= 400 && e.status < 500) {
+        storageService.set(Keys.ResourceId, null)
+        storageService.set(Keys.ResourceSessionToken, null)
+      }
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
+      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
+      return Promise.reject(e)
+    }
+  },
+  [ActionTypeResource.DELETE_SELF]: async function ({ dispatch, commit }): Promise<any> {
+    try {
+      const id = storageService.get(Keys.ResourceId)
+      await resourceService.delete(id, storageService.get(Keys.ResourceSessionToken))
+      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'delete_success' }, { root: true })
+      commit(MutationTypeResource.SET_RESOURCE, null)
+      storageService.set(Keys.ResourceId, null)
+      storageService.set(Keys.ResourceSessionToken, null)
+    } catch (e) {
+      if (e && e.status && e.status >= 400 && e.status < 500) {
+        storageService.set(Keys.ResourceId, null)
+        storageService.set(Keys.ResourceSessionToken, null)
+      }
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
       dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
       return Promise.reject(e)
     }

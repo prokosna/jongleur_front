@@ -3,11 +3,9 @@
     <div class="col-sm-3">
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <a class="nav-link active" id="v-pills-resource-tab" data-toggle="pill" href="#v-pills-resource" role="tab"
-           aria-controls="v-pills-resource" aria-selected="true">Client</a>
-        <a class="nav-link" id="v-pills-password-tab" data-toggle="pill" href="#v-pills-password" role="tab"
-           aria-controls="v-pills-password" aria-selected="false">Password</a>
-        <a class="nav-link" id="v-pills-keys-tab" data-toggle="pill" href="#v-pills-keys" role="tab"
-           aria-controls="v-pills-keys" aria-selected="false">Keys</a>
+           aria-controls="v-pills-resource" aria-selected="true">Resource</a>
+        <a class="nav-link" id="v-pills-account-tab" data-toggle="pill" href="#v-pills-account" role="tab"
+           aria-controls="v-pills-account" aria-selected="false">Account</a>
       </div>
     </div>
     <div class="col-sm-9">
@@ -16,13 +14,13 @@
              aria-labelledby="v-pills-resource-tab">
           <resource-update></resource-update>
         </div>
-        <div class="tab-pane fade" id="v-pills-password" role="tabpanel" aria-labelledby="v-pills-password-tab">
-          <resource-password></resource-password>
-        </div>
-        <div class="tab-pane fade" id="v-pills-keys" role="tabpanel" aria-labelledby="v-pills-keys-tab">
-          <p>Not implemented...</p>
+        <div class="tab-pane fade" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">
+          <resource-account></resource-account>
         </div>
       </div>
+    </div>
+    <div>
+      <modals-container/>
     </div>
   </div>
 </template>
@@ -31,7 +29,7 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import Update from './Update'
-  import Password from './Password'
+  import Account from './Account'
   import { mapState } from 'vuex'
   import { State } from '../../vuex/resource/State'
   import Client from "../../models/Client"
@@ -40,7 +38,7 @@
   @Component({
     components: {
       'resource-update': Update,
-      'resource-password': Password
+      'resource-account': Account
     },
     computed: {
       ...mapState('resource', {

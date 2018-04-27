@@ -1,7 +1,7 @@
 import RequestService from '../common/RequestService'
 import { ConfigKeys, configService } from '../common/ConfigService'
 import Client from '../../models/Client'
-import { camelToSnakeObj } from '../../utils/camelize'
+import { camelToSnakeObj, snakeToCamelObj } from '../../utils/camelize'
 import ClientType from '../../models/ClientType'
 
 interface ClientRegisterForm {
@@ -73,7 +73,15 @@ class ClientService {
     const ret = await this.requestService.get(url, null, token).catch(e => {
       throw e
     })
-    return Promise.resolve(new Client(ret))
+    return Promise.resolve(new Client(snakeToCamelObj(ret)))
+  }
+
+  async getAll (): Promise<Client[]> {
+    const url = `${configService.get(ConfigKeys.ApiUrl)}/clients`
+    const ret = await this.requestService.get(url, null, null).catch(e => {
+      throw e
+    })
+    return Promise.resolve(ret.map((v: Object) => new Client(snakeToCamelObj(v))))
   }
 
   async update (id: string, form: ClientUpdateForm, token: string): Promise<void> {

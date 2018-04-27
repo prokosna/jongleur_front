@@ -52,11 +52,11 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import FieldInput from '../form/FieldInput'
-  import { EndUserUpdatePasswordForm } from '../../services/enduser/EndUserService'
+  import { ClientUpdatePasswordForm } from '../../services/client/ClientService'
   import { mapState } from 'vuex'
-  import { State } from '../../vuex/enduser/State'
-  import EndUser from '../../models/EndUser'
-  import { ActionTypeEndUser } from '../../vuex/enduser/Action'
+  import { State } from '../../vuex/client/State'
+  import Client from '../../models/Client'
+  import { ActionTypeClient } from '../../vuex/client/Action'
   import { Watch } from 'vue-property-decorator'
   import ModalCommon from '../common/ModalCommon'
 
@@ -65,24 +65,24 @@
       'field-input': FieldInput
     },
     computed: {
-      ...mapState('enduser', {
-        endUser: (state: State) => state.endUser
+      ...mapState('client', {
+        client: (state: State) => state.client
       })
     }
   })
   export default class Account extends Vue {
     id: string = ''
-    form: EndUserUpdatePasswordForm = {
+    form: ClientUpdatePasswordForm = {
       newPassword: null,
       currentPassword: null
     }
     newPasswordAgain: string = null
     isProcessing: boolean = false
-    endUser: EndUser
+    client: Client
 
-    @Watch('endUser')
-    onEndUserChanged (endUser: EndUser) {
-      this.id = endUser.id
+    @Watch('client')
+    onClientChanged (client: Client) {
+      this.id = client.id
     }
 
     mounted () {
@@ -97,7 +97,7 @@
         return
       }
       this.isProcessing = true
-      this.$store.dispatch(`enduser/${ActionTypeEndUser.UPDATE_END_USER_PASSWORD}`, { id: this.id, form: this.form })
+      this.$store.dispatch(`client/${ActionTypeClient.UPDATE_CLIENT_PASSWORD}`, { id: this.id, form: this.form })
         .then(() => {
           this.isProcessing = false
         })
@@ -126,9 +126,9 @@
             type: 'primary',
             label: 'Delete',
             callback: () => {
-              this.$store.dispatch(`enduser/${ActionTypeEndUser.DELETE_SELF}`)
+              this.$store.dispatch(`client/${ActionTypeClient.DELETE_SELF}`)
                 .then(() => {
-                  this.$router.push('/enduser/login')
+                  this.$router.push('/client/login')
                 })
                 .catch(() => {
                 })

@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const CompressionPlugin = require('compression-webpack-plugin')
 const zopfli = require('node-zopfli')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin')
 
@@ -33,13 +34,6 @@ module.exports = {
         exclude: /node_modules/,
         options: {
           appendTsSuffixTo: [/\.vue$/]
-        }
-      },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
         }
       }
     ]
@@ -82,7 +76,14 @@ if (process.env.NODE_ENV === 'production') {
       algorithm: (content, options, fn) => {
         zopfli.gzip(content, options, fn)
       }
-    })
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: 'src/assets/*',
+        to: 'assets/',
+        flatten: true
+      }
+    ])
   ])
 } else {
   module.exports.plugins = (module.exports.plugins || []).concat([

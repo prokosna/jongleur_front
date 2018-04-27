@@ -152,7 +152,7 @@
           this.resource = ret.name
         })
         .catch((e) => {
-          const msg = e.error || 'unexpectedError'
+          const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
           return this.$store.dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg })
         })
         .catch(() => {

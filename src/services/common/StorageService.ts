@@ -1,4 +1,6 @@
 enum Keys {
+  AdminId = 'adminid',
+  AdminSessionToken = 'adminsessiontoken',
   EndUserId = 'enduserid',
   EndUserSessionToken = 'endusersessiontoken',
   ClientId = 'clientid',

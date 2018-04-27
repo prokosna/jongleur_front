@@ -36,7 +36,7 @@
 <script lang="ts">
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { Prop } from 'vue-property-decorator'
+  import { Prop, Watch } from 'vue-property-decorator'
 
   interface TemporaryObject {
     v: string
@@ -60,6 +60,11 @@
     inputType: string = 'text'
     items: TemporaryObject[] = []
     inputRequired: boolean = false
+
+    @Watch('value')
+    onValueChanged (value: string[]) {
+      this.items = value ? value.map((v: string) => ({ v })) : []
+    }
 
     mounted () {
       this.items = this.value ? this.value.map((v: string) => ({ v })) : []

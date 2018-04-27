@@ -13,14 +13,23 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
+              <a class="nav-link" href="/enduser/login">EndUser</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/client/login">Client</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/resource/login">Resource</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="/doc">Document</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Admins</a>
+              <a class="nav-link" href="/admin/login">Admin</a>
             </li>
           </ul>
-          <ul class="navbar-nav navbar-right" v-if="loggedInAs">
-            <li><a class="nav-link" href="#" @click="onLoggedOut">Logout</a></li>
+          <ul class="navbar-nav navbar-right">
+            <li v-if="loggedInAs"><a class="nav-link" href="#" @click="onLoggedOut">Logout</a></li>
           </ul>
         </div>
       </div>
@@ -74,6 +83,10 @@
         case 'resource':
           this.storageService.set(Keys.ResourceId, null)
           this.storageService.set(Keys.ResourceSessionToken, null)
+          break
+        case 'admin':
+          this.storageService.set(Keys.AdminId, null)
+          this.storageService.set(Keys.AdminSessionToken, null)
           break
       }
       this.$store.commit(MutationType.UPDATE_LOGGED_IN_AS, null)

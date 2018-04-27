@@ -21,7 +21,7 @@ class RequestService {
         .then(resp => resolve(resp.data))
         .catch(e => {
           console.error(e)
-          reject(e.response ? e.response.data : e)
+          reject(e.response)
         })
     })
   }
@@ -46,7 +46,7 @@ class RequestService {
         .then(resp => resolve(resp.data))
         .catch(e => {
           console.error(e)
-          reject(e.response ? e.response.data : e)
+          reject(e.response)
         })
     })
   }
@@ -71,7 +71,7 @@ class RequestService {
         .then(resp => resolve(resp.data))
         .catch(e => {
           console.error(e)
-          reject(e.response ? e.response.data : e)
+          reject(e.response)
         })
     })
   }
@@ -96,7 +96,7 @@ class RequestService {
         .then(resp => resolve(resp.data))
         .catch(e => {
           console.error(e)
-          reject(e.response ? e.response.data : e)
+          reject(e.response)
         })
     })
   }

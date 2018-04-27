@@ -20,6 +20,7 @@ export class ActionTypeEndUser {
   static LOGIN_AS_END_USER = 'LOGIN_AS_END_USER'
   static UPDATE_END_USER = 'UPDATE_END_USER'
   static UPDATE_END_USER_PASSWORD = 'UPDATE_END_USER_PASSWORD'
+  static DELETE_SELF = 'DELETE_SELF'
 }
 
 const actions: ActionTree<State, RootState> = {
@@ -30,13 +31,17 @@ const actions: ActionTree<State, RootState> = {
       if (!id || !token) {
         storageService.set(Keys.EndUserId, null)
         storageService.set(Keys.EndUserSessionToken, null)
-        dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: 'loginRequired' }, { root: true })
-        return Promise.reject(new Error('loginRequired'))
+        dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: 'login_required' }, { root: true })
+        return Promise.reject(new Error('login_required'))
       }
       const endUser = await endUserService.get(id, token)
       commit(MutationTypeEndUser.SET_END_USER, endUser)
     } catch (e) {
-      const msg = e.error || 'unexpectedError'
+      if (e && e.status && e.status >= 400 && e.status < 500) {
+        storageService.set(Keys.EndUserId, null)
+        storageService.set(Keys.EndUserSessionToken, null)
+      }
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
       dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
       return Promise.reject(e)
     }
@@ -44,10 +49,10 @@ const actions: ActionTree<State, RootState> = {
   [ActionTypeEndUser.REGISTER_END_USER]: async function ({ dispatch }, form: EndUserRegisterForm): Promise<any> {
     try {
       await endUserService.register(form)
-      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'registerSuccess' }, { root: true })
+      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'register_success' }, { root: true })
       return Promise.resolve()
     } catch (e) {
-      const msg = e.error || 'unexpectedError'
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
       dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
       return Promise.reject(e)
     }
@@ -57,10 +62,9 @@ const actions: ActionTree<State, RootState> = {
       const [sid, endUserId] = await endUserService.login(form.name, form.password)
       storageService.set(Keys.EndUserSessionToken, sid)
       storageService.set(Keys.EndUserId, endUserId)
-      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'loginSuccess' }, { root: true })
       return Promise.resolve()
     } catch (e) {
-      const msg = e.error || 'unexpectedError'
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
       dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
       return Promise.reject(e)
     }
@@ -68,11 +72,15 @@ const actions: ActionTree<State, RootState> = {
   [ActionTypeEndUser.UPDATE_END_USER]: async function ({ dispatch, commit }, params: { id: string, form: EndUserUpdateForm }): Promise<any> {
     try {
       await endUserService.update(params.id, params.form, storageService.get(Keys.EndUserSessionToken))
-      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'updateSuccess' }, { root: true })
+      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'update_success' }, { root: true })
       const endUser = await endUserService.get(params.id, storageService.get(Keys.EndUserSessionToken))
       commit(MutationTypeEndUser.SET_END_USER, endUser)
     } catch (e) {
-      const msg = e.error || 'unexpectedError'
+      if (e && e.status && e.status >= 400 && e.status < 500) {
+        storageService.set(Keys.EndUserId, null)
+        storageService.set(Keys.EndUserSessionToken, null)
+      }
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
       dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
       return Promise.reject(e)
     }
@@ -81,11 +89,33 @@ const actions: ActionTree<State, RootState> = {
     try {
       console.log(params.form)
       await endUserService.updatePassword(params.id, params.form, storageService.get(Keys.EndUserSessionToken))
-      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'updateSuccess' }, { root: true })
+      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'update_success' }, { root: true })
       const endUser = await endUserService.get(params.id, storageService.get(Keys.EndUserSessionToken))
       commit(MutationTypeEndUser.SET_END_USER, endUser)
     } catch (e) {
-      const msg = e.error || 'unexpectedError'
+      if (e && e.status && e.status >= 400 && e.status < 500) {
+        storageService.set(Keys.EndUserId, null)
+        storageService.set(Keys.EndUserSessionToken, null)
+      }
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
+      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
+      return Promise.reject(e)
+    }
+  },
+  [ActionTypeEndUser.DELETE_SELF]: async function ({ dispatch, commit }): Promise<any> {
+    try {
+      const id = storageService.get(Keys.EndUserId)
+      await endUserService.delete(id, storageService.get(Keys.EndUserSessionToken))
+      dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Info, message: 'delete_success' }, { root: true })
+      commit(MutationTypeEndUser.SET_END_USER, null)
+      storageService.set(Keys.EndUserId, null)
+      storageService.set(Keys.EndUserSessionToken, null)
+    } catch (e) {
+      if (e && e.status && e.status >= 400 && e.status < 500) {
+        storageService.set(Keys.EndUserId, null)
+        storageService.set(Keys.EndUserSessionToken, null)
+      }
+      const msg = e.data ? e.data.error || 'unexpected_error' : 'unexpected_error'
       dispatch(ActionType.UPDATE_ALERT_MESSAGE, { type: AlertType.Danger, message: msg }, { root: true })
       return Promise.reject(e)
     }

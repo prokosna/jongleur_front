@@ -94,6 +94,14 @@ class EndUserService {
     return Promise.resolve(new EndUser(snakeToCamelObj(ret)))
   }
 
+  async getAll (): Promise<EndUser[]> {
+    const url = `${configService.get(ConfigKeys.ApiUrl)}/end_users`
+    const ret = await this.requestService.get(url, null, null).catch(e => {
+      throw e
+    })
+    return Promise.resolve(ret.map((v: Object) => new EndUser(snakeToCamelObj(v))))
+  }
+
   async update (id: string, form: EndUserUpdateForm, token: string): Promise<void> {
     const url = `${configService.get(ConfigKeys.ApiUrl)}/end_users/${id}`
     await this.requestService.put(url, null, camelToSnakeObj(form), token).catch(e => {

@@ -1,7 +1,7 @@
 <template>
     <form>
         <fieldset>
-            <div class="form-group">
+            <div class="form-group row">
                 <field-input v-model="input.name"
                              label="Name"
                              name="name"
@@ -10,7 +10,7 @@
 
                 </field-input>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
                 <field-input v-model="input.password"
                              label="Password"
                              name="password"

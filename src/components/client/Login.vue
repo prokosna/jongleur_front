@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-sm-7">
+    <div class="col-7">
       <h1>Client</h1>
       <p>
         "Client" is a user of resources such as web services, desktop apps and mobile apps.
@@ -8,7 +8,7 @@
         gets "Access Token".
       </p>
     </div>
-    <div class="col-sm-5">
+    <div class="col-5">
       <ul class="nav nav-tabs">
         <li class="nav-item">
           <a class="nav-link active" href="#logIn" data-toggle="tab">Log in</a>
@@ -61,6 +61,7 @@
       }
       this.isProcessing = true
       this.$store.dispatch(`client/${ActionTypeClient.LOGIN_AS_CLIENT}`, this.form)
+        .then(() => this.$store.dispatch(`client/${ActionTypeClient.FETCH_MY_CLIENT}`))
         .then(() => {
           this.$router.replace('/client/home')
           this.isProcessing = false
@@ -73,10 +74,6 @@
 </script>
 
 <style scoped>
-  .content {
-    padding: 10px 10px;
-  }
-
   .tab-content {
     padding: 10px 30px;
     border: 1px solid #333333;

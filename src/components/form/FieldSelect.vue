@@ -7,7 +7,7 @@
             :value="value"
             @input="update"
     >
-      <option v-for="(v, i) in options">
+      <option v-for="(v, i) in options" :value="v">
         {{ inputDisplayOptions ? inputDisplayOptions[i]: v }}
       </option>
     </select>
@@ -17,12 +17,12 @@
 <script lang="ts">
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { Prop } from 'vue-property-decorator'
+  import { Prop, Watch } from 'vue-property-decorator'
 
   @Component
   export default class FieldSelect extends Vue {
     @Prop()
-    value: string[]
+    value: string
     @Prop()
     label: string
     @Prop()
@@ -36,6 +36,11 @@
 
     inputRequired: boolean = false
     inputDisplayOptions: string[] = null
+
+    @Watch('displayOptions')
+    onDisplayOptionsChanged (value: string[]) {
+      this.inputDisplayOptions = value
+    }
 
     mounted () {
       this.inputRequired = this.required || false

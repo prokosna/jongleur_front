@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+import VModal from 'vue-js-modal'
 import App from './App.vue'
 import * as message from './message.json'
 import router from './router'
@@ -17,6 +18,8 @@ const i18n = new VueI18n({
   fallbackLocale: 'en',
   messages: message
 })
+
+Vue.use(VModal, { dynamic: true })
 
 new Vue({
   store,

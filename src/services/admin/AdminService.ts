@@ -1,7 +1,7 @@
 import RequestService from '../common/RequestService'
 import { ConfigKeys, configService } from '../common/ConfigService'
 import Admin from '../../models/Admin'
-import { camelToSnakeObj } from '../../utils/camelize'
+import { camelToSnakeObj, snakeToCamelObj } from '../../utils/camelize'
 
 interface AdminRegisterForm {
   name: string
@@ -60,7 +60,15 @@ class AdminService {
     const ret = await this.requestService.get(url, null, token).catch(e => {
       throw e
     })
-    return Promise.resolve(new Admin(ret))
+    return Promise.resolve(new Admin(snakeToCamelObj(ret)))
+  }
+
+  async getAll (): Promise<Admin[]> {
+    const url = `${configService.get(ConfigKeys.ApiUrl)}/admins`
+    const ret = await this.requestService.get(url, null, null).catch(e => {
+      throw e
+    })
+    return Promise.resolve(ret.map((v: Object) => new Admin(snakeToCamelObj(v))))
   }
 
   async update (id: string, form: AdminUpdateForm, token: string): Promise<void> {
@@ -82,6 +90,14 @@ class AdminService {
   async delete (id: string, token: string): Promise<void> {
     const url = `${configService.get(ConfigKeys.ApiUrl)}/admins/${id}`
     await this.requestService.delete(url, null, null, token).catch(e => {
+      throw e
+    })
+    return Promise.resolve()
+  }
+
+  async health (): Promise<void> {
+    const url = `${configService.get(ConfigKeys.ApiUrl)}/health`
+    await this.requestService.get(url, null, null).catch(e => {
       throw e
     })
     return Promise.resolve()

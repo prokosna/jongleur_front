@@ -11,3 +11,5 @@ yarn-error.log
 *.njsproj
 *.sln
 *.iml
+
+TODO.md

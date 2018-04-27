@@ -1,9 +1,11 @@
-import Vue from 'vue'
+import VueI18n from 'vue-i18n'
 
 declare module 'vue/types/vue' {
-  // interface Vue {
-  //   $t: any
-  // }
+
+  interface Vue {
+    $t: typeof VueI18n.prototype.t
+  }
+
   interface VueConstructor {
     $log: any
   }

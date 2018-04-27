@@ -1,15 +1,24 @@
 {
   "ja": {
     "message": {
-      "unexpectedError": "何かがおかしいです。"
     }
   },
   "en": {
     "message": {
-      "unexpectedError": "Something went wrong...",
-      "registerSuccess": "New EndUser was successfully registered!",
-      "updateSuccess": "Successfully updated!",
-      "loginRequired": "Login is required."
+      "unexpected_error": "Something went wrong...",
+      "register_success": "Successfully registered!",
+      "update_success": "Successfully updated!",
+      "delete_success": "Successfully deleted!",
+      "login_required": "Login is required.",
+      "invalid_request": "Invalid request.",
+      "access_denied": "You cannot do this.",
+      "server_error": "Server may be down. Please try later.",
+      "temporarily_unavailable": "Server is under maintenance. Please try later.",
+      "entity_not_found": "Entity was not found.",
+      "login_failed": "Login failed.",
+      "duplicated_entity": "The entity that has the same parameters has been already registered.",
+      "conflict_detected": "Sorry, please try again later.",
+      "wrong_password": "Password is wrong!"
     }
   }
 }

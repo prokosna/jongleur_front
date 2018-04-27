@@ -7,7 +7,7 @@
     </p>
     <div class="row">
       <div class="col-4">
-        <a href="/end_user/login" class="btn btn-outline-primary btn-lg btn-block">End User</a>
+        <a href="/enduser/login" class="btn btn-outline-primary btn-lg btn-block">End User</a>
       </div>
       <div class="col-4">
         <a href="/client/login" class="btn btn-outline-success btn-lg btn-block">Client</a>

@@ -48,9 +48,9 @@ class EndUser {
     this.phoneNumber = obj.phoneNumber
     this.acceptedClients = obj.acceptedClients ? obj.acceptedClients.map((v: any) =>
       new AcceptedClient(v.clientId, v.scope)) : null
-    this.createdAt = obj.created_at ? new Date(obj.created_at) : null
-    this.updatedAt = obj.updated_at ? new Date(obj.updated_at) : null
-    this.authenticatedAt = obj.authenticated_at ? new Date(obj.authenticated_at) : null
+    this.createdAt = obj.createdAt ? new Date(obj.createdAt) : null
+    this.updatedAt = obj.updatedAt ? new Date(obj.updatedAt) : null
+    this.authenticatedAt = obj.authenticatedAt ? new Date(obj.authenticatedAt) : null
   }
 
   toJson (): string {

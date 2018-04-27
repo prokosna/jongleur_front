@@ -513,10 +513,10 @@ const actions = {
   },
   logout ({ commit, state }) {
     switch (state.loggedInAs) {
-      case 'end_user':
+      case 'enduser':
         commit('updateEndUserSavedId', { id: null })
         commit('updateEndUserModel', { model: {} })
-        router.push('/end_user/login')
+        router.push('/enduser/login')
         break
       case 'client':
         commit('updateClientSavedId', { id: null })

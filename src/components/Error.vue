@@ -1,10 +1,12 @@
 <template>
-
+    <div>
+      Sorry!
+    </div>
 </template>
 
 <script>
   export default {
-    name: 'Password'
+    name: 'Error'
   }
 </script>
 

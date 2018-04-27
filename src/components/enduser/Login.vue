@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-sm-7">
+    <div class="col-7">
       <h1>End-User</h1>
       <p>
         <b>End-User</b> is a human participant[<a href="http://openid.net/specs/openid-connect-core-1_0.html">OpenID
@@ -9,7 +9,7 @@
         to show that they are permitted.
       </p>
     </div>
-    <div class="col-sm-5">
+    <div class="col-5">
       <ul class="nav nav-tabs">
         <li class="nav-item">
           <a class="nav-link active" href="#logIn" data-toggle="tab">Log in</a>
@@ -22,7 +22,7 @@
         <div class="tab-pane fade show active card-body" id="logIn">
           <form-login :form="form" @submit="onLogin"></form-login>
           <div>
-            <a href="/end_user/register">Create a new End-User</a>
+            <a href="/enduser/register">Create a new End-User</a>
           </div>
         </div>
         <div class="tab-pane fade card-body" id="ldap">
@@ -57,7 +57,7 @@
         // may be already logged in
         this.$store.dispatch(`enduser/${ActionTypeEndUser.FETCH_MY_END_USER}`)
           .then(() => {
-            this.$router.replace('/end_user/home')
+            this.$router.replace('/enduser/home')
           })
       }
     }
@@ -68,8 +68,9 @@
       }
       this.isProcessing = true
       this.$store.dispatch(`enduser/${ActionTypeEndUser.LOGIN_AS_END_USER}`, this.form)
+        .then(() => this.$store.dispatch(`enduser/${ActionTypeEndUser.FETCH_MY_END_USER}`))
         .then(() => {
-          this.$router.replace('/end_user/home')
+          this.$router.replace('/enduser/home')
           this.isProcessing = false
         })
         .catch(() => {

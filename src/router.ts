@@ -2,16 +2,19 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from './components/Home.vue'
 import Doc from './components/Doc.vue'
+import AdminHome from './components/admin/Home.vue'
+import AdminLogin from './components/admin/Login.vue'
 import EndUserHome from './components/enduser/Home.vue'
 import EndUserLogin from './components/enduser/Login.vue'
 import EndUserRegister from './components/enduser/Register.vue'
 import Authorize from './components/oidc/Authorize.vue'
-import ClientUpdate from './components/client/Update.vue'
+import ClientHome from './components/client/Home.vue'
 import ClientLogin from './components/client/Login.vue'
 import ClientRegister from './components/client/Register.vue'
-import ResourceUpdate from './components/resource/Update.vue'
+import ResourceHome from './components/resource/Home.vue'
 import ResourceLogin from './components/resource/Login.vue'
 import ResourceRegister from './components/resource/Register.vue'
+import Error from './components/Error.vue'
 
 Vue.use(VueRouter)
 
@@ -26,13 +29,22 @@ const router = new VueRouter({
       path: '/doc', component: Doc
     },
     {
-      path: '/end_user/login', component: EndUserLogin
+      path: '/sorry', component: Error
     },
     {
-      path: '/end_user/home', component: EndUserHome
+      path: '/admin/home', component: AdminHome
     },
     {
-      path: '/end_user/register', component: EndUserRegister
+      path: '/admin/login', component: AdminLogin
+    },
+    {
+      path: '/enduser/login', component: EndUserLogin
+    },
+    {
+      path: '/enduser/home', component: EndUserHome
+    },
+    {
+      path: '/enduser/register', component: EndUserRegister
     },
     {
       path: '/authorize', component: Authorize
@@ -44,7 +56,7 @@ const router = new VueRouter({
       path: '/client/register', component: ClientRegister
     },
     {
-      path: '/client/update', component: ClientUpdate
+      path: '/client/home', component: ClientHome
     },
     {
       path: '/resource/login', component: ResourceLogin
@@ -53,7 +65,7 @@ const router = new VueRouter({
       path: '/resource/register', component: ResourceRegister
     },
     {
-      path: '/resource/update', component: ResourceUpdate
+      path: '/resource/home', component: ResourceHome
     } as RouteConfig
   ]
 })

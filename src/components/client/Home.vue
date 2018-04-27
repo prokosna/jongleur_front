@@ -4,10 +4,8 @@
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <a class="nav-link active" id="v-pills-client-tab" data-toggle="pill" href="#v-pills-client" role="tab"
            aria-controls="v-pills-client" aria-selected="true">Client</a>
-        <a class="nav-link" id="v-pills-password-tab" data-toggle="pill" href="#v-pills-password" role="tab"
-           aria-controls="v-pills-password" aria-selected="false">Password</a>
-        <a class="nav-link" id="v-pills-keys-tab" data-toggle="pill" href="#v-pills-keys" role="tab"
-           aria-controls="v-pills-keys" aria-selected="false">Keys</a>
+        <a class="nav-link" id="v-pills-account-tab" data-toggle="pill" href="#v-pills-account" role="tab"
+           aria-controls="v-pills-password" aria-selected="false">Account</a>
       </div>
     </div>
     <div class="col-sm-9">
@@ -16,13 +14,13 @@
              aria-labelledby="v-pills-client-tab">
           <client-update></client-update>
         </div>
-        <div class="tab-pane fade" id="v-pills-password" role="tabpanel" aria-labelledby="v-pills-password-tab">
-          <client-password></client-password>
-        </div>
-        <div class="tab-pane fade" id="v-pills-keys" role="tabpanel" aria-labelledby="v-pills-keys-tab">
-          <p>Not implemented...</p>
+        <div class="tab-pane fade" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">
+          <client-account></client-account>
         </div>
       </div>
+    </div>
+    <div>
+      <modals-container/>
     </div>
   </div>
 </template>
@@ -31,7 +29,7 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import Update from './Update'
-  import Password from './Password'
+  import Account from './Account'
   import { mapState } from 'vuex'
   import { State } from '../../vuex/client/State'
   import Client from "../../models/Client"
@@ -40,7 +38,7 @@
   @Component({
     components: {
       'client-update': Update,
-      'client-password': Password
+      'client-account': Account
     },
     computed: {
       ...mapState('client', {
